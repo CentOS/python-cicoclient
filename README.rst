@@ -3,6 +3,7 @@ About
 python-cicoclient_ is a module that is a work in progress.
 
 It provides:
+
 * A client library for communicating with the admin.ci.centos.org REST API
 * A wrapper library that leverages the client for doing each API call
 * A CLI interface that leverages the wrapper to communicate with the API
