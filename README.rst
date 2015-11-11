@@ -11,6 +11,14 @@ It provides:
 
 .. _python-cicoclient: https://github.com/dmsimard/python-cicoclient
 
+Installation
+============
+This module is published on PyPi in pre-release. You can install it with::
+
+    pip install --pre python-cicoclient
+
+You can then get started with the CLI interface with: ``cico help``
+
 Documentation
 =============
 Documentation will eventually be available. In the meantime, use the provided
