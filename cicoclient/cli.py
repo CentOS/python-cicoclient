@@ -29,18 +29,22 @@ class Inventory(Lister):
 
     def get_parser(self, prog_name):
         parser = super(Inventory, self).get_parser(prog_name)
+        parser.add_argument(
+            '--all',
+            action='store_true',
+            default=False,
+            help='Display all nodes, regardless if an API key is used.'
+        )
         return parser
 
     @utils.log_method(log)
     def take_action(self, parsed_args):
-        self.log.debug("take_action(%s)", parsed_args)
         api = CicoWrapper(
             endpoint=self.app.options.endpoint,
             api_key=self.app.options.api_key
         )
 
-        response, inventory = api.inventory()
-        self.log.debug('HTTP: %s' % response)
+        inventory = api.inventory(all=parsed_args.all)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                 'used_count', 'current_state', 'comment', 'distro',

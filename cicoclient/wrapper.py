@@ -31,48 +31,56 @@ class CicoWrapper(client.CicoClient):
         except KeyError:
             self.api_key = None
 
-    def inventory(self):
-        """
-        Returns a node inventory. If an API key is specified, only the nodes
-         provisioned by this key will be returned.
+        self.full_inventory = self._full_inventory()
+        self.self_inventory = self._self_inventory()
 
-         Some additional work required to provide consistent and consumable
-         output.
-           - Inventory output only contains values, no keys - Add the keys to
-             the output so that it can be consumed more easily.
-           - Additionally, if you provide a key, you only get the ssid of the
-             node. Fill in the rest of the node's details.
-
-        :param key: API key for the admin.ci.centos.org provisioning service
-        :return: [ status_code, json_inventory_dict ]
+    def _full_inventory(self):
         """
-        # We'll need the full inventory regardless since the node information
-        # is in this call.
+        Returns a full inventory
+        Some additional work required to provide consistent and consumable
+        output.
+        Inventory output only contains values, no keys - Add the keys to
+        the output so that it can be consumed more easily.
+        """
         resp, inventory = self.get('Inventory')
 
         keys = ['host_id', 'hostname', 'ip_address', 'chassis',
                 'used_count', 'current_state', 'comment', 'distro',
                 'rel', 'centos_version', 'architecture', 'node_pool']
 
-        # For each host, build a dict of key=>value coming from just values
         real_inventory = dict()
         for host in inventory:
             real_inventory[host[1]] = dict()
             for key in keys:
                 real_inventory[host[1]][key] = host[keys.index(key)]
 
-        if self.api_key is not None:
-            resp, self_inventory = self.get('Inventory?key=%s' % self.api_key)
-            real_self_inventory = dict()
+        return real_inventory
 
-            # Inventory output will only contain the server name and session
-            # ID when a key is provided. Provide the same format as with the
-            # full inventory instead for consistency.
-            for host in self_inventory:
-                real_self_inventory[host[0]] = real_inventory[host[0]]
+    def _self_inventory(self):
+        """
+        Inventory output will only contain the server name and the session ID
+        when a key is provided. Provide the same format as with the full
+        inventory instead for consistency.
+        """
+        if self.api_key is None:
+            return None
 
-            inventory = real_self_inventory
+        resp, self_inventory = self.get('Inventory?key=%s' % self.api_key)
+        real_self_inventory = dict()
+
+        for host in self_inventory:
+            real_self_inventory[host[0]] = self.full_inventory[host[0]]
+
+        return real_self_inventory
+
+    def inventory(self, all=False):
+        """
+        Returns a node inventory. If an API key is specified, only the nodes
+         provisioned by this key will be returned.
+
+        :return: { inventory }
+        """
+        if all or self.api_key is None:
+            return self.full_inventory
         else:
-            inventory = real_inventory
-
-        return resp, inventory
+            return self.self_inventory
