@@ -69,8 +69,8 @@ class NodeGet(Lister):
             help='Requested server architecture. Defaults to x86_64.'
         )
         parser.add_argument(
-            '--ver',
-            metavar='<ver>',
+            '--release',
+            metavar='<release>',
             choices=['5', '6', '7'],
             default='7',
             help='Requested CentOS release. Defaults to 7.'
@@ -92,7 +92,7 @@ class NodeGet(Lister):
         )
 
         hosts, ssid = api.node_get(arch=parsed_args.arch,
-                                   ver=parsed_args.ver,
+                                   ver=parsed_args.release,
                                    count=parsed_args.count)
         message = "SSID for these servers: %s\n" % ssid
         sys.stdout.write(message)
