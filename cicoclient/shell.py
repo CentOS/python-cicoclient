@@ -29,7 +29,7 @@ class CicoCli(App):
     def __init__(self):
         super(CicoCli, self).__init__(
             description='CLI interface to admin.ci.centos.org',
-            version='0.1',
+            version='0.2',
             command_manager=CommandManager('cico.cli'),
             deferred_help=True,
             )
