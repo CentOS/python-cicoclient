@@ -1,5 +1,4 @@
 sphinx
-sphinxcontrib-httpdomain
 unittest2
 mock
 discover

@@ -1,6 +1,8 @@
 About
 =====
-python-cicoclient_ is a module that is a work in progress.
+python-cicoclient_ is a client, library, and a CLI interface that can be used
+to communicate with the `ci.centos.org`_ infrastructure provisioning system:
+Duffy_.
 
 It provides:
 
@@ -10,14 +12,15 @@ It provides:
   from the command line
 
 .. _python-cicoclient: https://github.com/dmsimard/python-cicoclient
+.. _ci.centos.org: https://ci.centos.org/
+.. _Duffy: https://wiki.centos.org/QaWiki/CI/Duffy
 
-Installation
-============
-This module is published on PyPi in pre-release. You can install it with::
+Documentation
+=============
+Documentation on how to install and use python-cicoclient is available on
+`ReadTheDocs.org`_
 
-    pip install --pre python-cicoclient
-
-You can then get started with the CLI interface with: ``cico help``
+.. _ReadTheDocs.org: http://python-cicoclient.readthedocs.org/en/latest/
 
 Documentation
 =============
