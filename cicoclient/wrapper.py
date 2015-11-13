@@ -12,8 +12,6 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 #
-#   Author: David Moreau Simard <dms@redhat.com>
-#
 
 import cicoclient.client as client
 import cicoclient.exceptions as exceptions
