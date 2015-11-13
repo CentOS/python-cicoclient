@@ -72,8 +72,8 @@ class CicoClient(object):
 
         # Set the log format and log level
         try:
-            debug = self.params["debug"]
-            log.setLevel(logging.DEBUG)
+            if self.params['debug']:
+                log.setLevel(logging.DEBUG)
         except KeyError:
             log.setLevel(logging.INFO)
 

@@ -18,6 +18,7 @@
 import cicoclient.client as client
 import cicoclient.exceptions as exceptions
 
+
 class CicoWrapper(client.CicoClient):
     """
     Wrapper library around the available API calls for the admin.ci.centos.org

@@ -24,7 +24,7 @@ from cicoclient import utils
 
 
 class Inventory(Lister):
-    "Return a node inventory from the ci.centos.org infrastructure."
+    """Returns a node inventory from the ci.centos.org infrastructure."""
 
     log = logging.getLogger(__name__)
 
@@ -48,12 +48,13 @@ class Inventory(Lister):
         inventory = api.inventory(all=parsed_args.all)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                'used_count', 'current_state', 'comment', 'distro',
-                'rel', 'centos_version', 'architecture', 'node_pool')
+                   'used_count', 'current_state', 'comment', 'distro',
+                   'rel', 'centos_version', 'architecture', 'node_pool')
 
         return (columns,
                 (utils.get_dict_properties(inventory[host], columns)
                  for host in inventory))
+
 
 class NodeGet(Lister):
     """Requests nodes from the ci.centos.org infrastructure"""
@@ -95,16 +96,16 @@ class NodeGet(Lister):
         hosts, ssid = api.node_get(arch=parsed_args.arch,
                                    ver=parsed_args.ver,
                                    count=parsed_args.count)
-        message= "SSID for these servers: %s\n" % ssid
+        message = "SSID for these servers: %s\n" % ssid
         sys.stdout.write(message)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                'used_count', 'current_state', 'comment', 'distro',
-                'rel', 'centos_version', 'architecture', 'node_pool')
+                   'used_count', 'current_state', 'comment', 'distro',
+                   'rel', 'centos_version', 'architecture', 'node_pool')
 
         return (columns,
-        (utils.get_dict_properties(hosts[host], columns)
-         for host in hosts))
+                (utils.get_dict_properties(hosts[host], columns)
+                 for host in hosts))
 
 
 class NodeDone(Lister):
@@ -129,13 +130,13 @@ class NodeDone(Lister):
         )
 
         hosts = api.node_done(ssid=parsed_args.ssid)
-        message= "Released these servers with SSID: %s\n" % parsed_args.ssid
+        message = "Released these servers with SSID: %s\n" % parsed_args.ssid
         sys.stdout.write(message)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                'used_count', 'current_state', 'comment', 'distro',
-                'rel', 'centos_version', 'architecture', 'node_pool')
+                   'used_count', 'current_state', 'comment', 'distro',
+                   'rel', 'centos_version', 'architecture', 'node_pool')
 
         return (columns,
-        (utils.get_dict_properties(hosts[host], columns)
-         for host in hosts))
+                (utils.get_dict_properties(hosts[host], columns)
+                 for host in hosts))

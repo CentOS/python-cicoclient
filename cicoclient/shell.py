@@ -42,7 +42,7 @@ class CicoCli(App):
             '--endpoint',
             metavar='<endpoint>',
             help='Endpoint to the admin.ci.centos.org service.\n'
-                  ' Defaults to: http://admin.ci.centos.org:8080/',
+                 ' Defaults to: http://admin.ci.centos.org:8080/',
             default='http://admin.ci.centos.org:8080/'
         )
         parser.add_argument(

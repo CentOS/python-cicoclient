@@ -15,6 +15,7 @@
 #   Author: David Moreau Simard <dms@redhat.com>
 #
 
+
 class ApiKeyRequired(Exception):
     """
     When running a command that requires an api key and the api key is not
@@ -22,6 +23,7 @@ class ApiKeyRequired(Exception):
     """
     def __str__(self):
         return "The requested operation requires an API key."
+
 
 class SsidRequired(Exception):
     """
