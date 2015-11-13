@@ -22,11 +22,6 @@ Documentation on how to install and use python-cicoclient is available on
 
 .. _ReadTheDocs.org: http://python-cicoclient.readthedocs.org/en/latest/
 
-Documentation
-=============
-Documentation will eventually be available. In the meantime, use the provided
-help commands on the CLI interface.
-
 Author
 ======
 David Moreau Simard
