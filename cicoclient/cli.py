@@ -78,7 +78,7 @@ class NodeGet(Lister):
         )
         parser.add_argument(
             '--count',
-            metavar='<ver>',
+            metavar='<count>',
             type=int,
             default=1,
             help='Requested amount of servers. Defaults to 1.'

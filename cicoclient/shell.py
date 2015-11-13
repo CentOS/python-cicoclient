@@ -49,7 +49,7 @@ class CicoCli(App):
             '--api-key',
             metavar='<api-key>',
             help='API key to admin.ci.centos.org service. Defaults to'
-                 'environment variable for CICO_API_KEY.',
+                 ' environment variable for CICO_API_KEY.',
             default=os.getenv('CICO_API_KEY', None)
         )
 
