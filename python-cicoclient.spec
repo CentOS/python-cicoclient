@@ -9,9 +9,12 @@ Source0:          http://pypi.python.org/packages/source/p/%{name}/%{name}-%{ver
 
 BuildArch:        noarch
 
+BuildRequires:    git
+BuildRequires:    python2-devel
 BuildRequires:    python-cliff
 BuildRequires:    python-pbr
 BuildRequires:    python-requests
+BuildRequires:    python-setuptools
 BuildRequires:    python-simplejson
 BuildRequires:    python-six
 
@@ -29,6 +32,7 @@ communicate with the ci.centos.org infrastructure provisioning system: Duffy.
 Summary:          Documentation for python-cicoclient
 
 BuildRequires:    python-sphinx
+BuildRequires:    python-sphinx_rtd_theme
 
 Requires:         %{name} = %{version}-%{release}
 
