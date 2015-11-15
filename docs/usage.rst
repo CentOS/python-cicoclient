@@ -4,9 +4,9 @@ In order to be able to use ``cico``, you need to use it from a location that
 has network connectivity to the administrative endpoint, by default this is
 ``http://admin.ci.centos.org:8080/``.
 
-Built-in CLI help
-~~~~~~~~~~~~~~~~~
-``cico`` comes built-in with powerful help that explains available commands,
+Built-in help
+~~~~~~~~~~~~~
+``cico`` comes built-in with powerful CLI help that explains available commands,
 their available arguments and output formatting options thanks to the cliff_
 library.
 
@@ -37,6 +37,9 @@ Here's what it looks like::
           inventory      Return a node inventory from the ci.centos.org infrastructure.
           node done      Releases nodes from the ci.centos.org infrastructure for a ssid
           node get       Requests nodes from the ci.centos.org infrastructure
+
+If you have installed ``python-cicoclient`` from a RPM repository, you can also
+access the complete documentation with ``man cico``.
 
 Setting your endpoint
 ~~~~~~~~~~~~~~~~~~~~~

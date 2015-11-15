@@ -1,9 +1,8 @@
 Installing
 ==========
-Releases of python-cicoclient are available on PyPi_. They are currently tagged
-as pre-release::
+Releases of python-cicoclient are available on PyPi_::
 
-    pip install --pre python-cicoclient
+    pip install python-cicoclient
 
 That's it ! There is no extra dependencies or configuration required.
 
