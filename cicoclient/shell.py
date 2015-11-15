@@ -16,6 +16,7 @@
 import sys
 import os
 
+import cicoclient
 from cliff.app import App
 from cliff.commandmanager import CommandManager
 
@@ -27,7 +28,7 @@ class CicoCli(App):
     def __init__(self):
         super(CicoCli, self).__init__(
             description='CLI interface to admin.ci.centos.org',
-            version='0.3',
+            version=cicoclient.__version__,
             command_manager=CommandManager('cico.cli'),
             deferred_help=True,
             )
