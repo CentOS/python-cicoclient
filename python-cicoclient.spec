@@ -33,6 +33,8 @@ Summary:          Documentation for python-cicoclient
 
 BuildRequires:    python-sphinx
 BuildRequires:    python-sphinx_rtd_theme
+# python-sphinx_rtd_theme missing dependency https://bugzilla.redhat.com/show_bug.cgi?id=1282297
+BuildRequires:    fontawesome-fonts-web
 
 Requires:         %{name} = %{version}-%{release}
 
