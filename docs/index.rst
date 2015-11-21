@@ -23,4 +23,5 @@ Table of Contents
     :maxdepth: 2
 
     Installing <installing>
-    Usage <usage>
+    Using cico with CLI <cli_usage>
+    Using cico with Ansible <ansible_usage>

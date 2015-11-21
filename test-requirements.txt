@@ -4,3 +4,4 @@ unittest2
 mock
 discover
 flake8
+ansible

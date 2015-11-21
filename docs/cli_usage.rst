@@ -116,8 +116,8 @@ Usage::
         |      64 | node3.cluster | <obfuscated> | <cluster> |         67 | Deployed      | 3b413756-8967-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
         +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
 
-Requesting a node
-~~~~~~~~~~~~~~~~~
+Requesting nodes
+~~~~~~~~~~~~~~~~
 The ``cico node get`` command will allow you to request one or more nodes.
 This command requires an API key to be configured.
 
@@ -169,8 +169,8 @@ Usage::
         |     117 | node4.cluster  | <obfuscated> | cluster |         69 | Ready         | -       | None   | None | 7              | x86_64       |         1 |
         +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
 
-Releasing a node
-~~~~~~~~~~~~~~~~
+Releasing nodes
+~~~~~~~~~~~~~~~
 The ``cico node done`` command will allow you to release all the nodes tied
 to a session ID.
 This command requires an API key to be configured.
