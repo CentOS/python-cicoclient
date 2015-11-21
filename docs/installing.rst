@@ -34,8 +34,10 @@ On Fedora
     dnf copr enable dmsimard/python-cicoclient
     dnf -y install python-cicoclient
 
-To get started with ``cico``, read the `usage documentation`_.
+To get started with ``cico``, read the `CLI usage`_ or the `Ansible usage`_
+documentation.
 
 .. _PyPi: https://pypi.python.org/pypi/python-cicoclient/
 .. _OpenStack RDO project: https://www.rdoproject.org/
-.. _usage documentation: usage.html
+.. _CLI usage: cli_usage.html
+.. _Ansible usage: ansible_usage.html
