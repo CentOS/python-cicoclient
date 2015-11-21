@@ -10,10 +10,13 @@ It provides:
 * A wrapper library that leverages the client for doing each API call
 * A CLI interface that leverages the wrapper to communicate with the API
   from the command line
+* An Ansible_ module that leverages the wrapper to communicate with the API
+  through Ansible.
 
 .. _python-cicoclient: https://github.com/dmsimard/python-cicoclient
 .. _ci.centos.org: https://ci.centos.org/
 .. _Duffy: https://wiki.centos.org/QaWiki/CI/Duffy
+.. _Ansible: http://www.ansible.com/
 
 Documentation
 =============
