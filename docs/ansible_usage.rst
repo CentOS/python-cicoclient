@@ -13,7 +13,7 @@ Built-in help
 The ``cico`` Ansible module comes built-in with Ansible documentation, you can
 use ``ansible-doc`` to access it::
 
-    $ ansible-doc -M contrib/ cico
+    $ ansible-doc -M cicoclient/ansible cico
     less 481 (POSIX regular expressions)
     Copyright (C) 1984-2015  Mark Nudelman
 
