@@ -6,7 +6,11 @@ default this is ``http://admin.ci.centos.org:8080/``.
 
 The ``cico`` Ansible module comes packaged with ``python-cicoclient``.
 
+To use it, it would be convenient to add the module to your Ansible module
+library. An example Ansible configuration file can be found inside the package_.
+
 .. _Ansible: http://www.ansible.com/
+.. _package: https://github.com/dmsimard/python-cicoclient/blob/master/cicoclient/ansible/ansible.cfg.example
 
 Built-in help
 ~~~~~~~~~~~~~
