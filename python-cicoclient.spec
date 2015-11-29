@@ -1,5 +1,5 @@
 Name:             python-cicoclient
-Version:          0.3.4
+Version:          0.3.5
 Release:          dev
 Summary:          Client interfaces to admin.ci.centos.org
 
