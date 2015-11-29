@@ -71,7 +71,18 @@ class CicoWrapper(client.CicoClient):
 
         return real_self_inventory
 
-    def inventory(self, all=False):
+    def _ssid_inventory(self, inventory, ssid):
+        """
+        Filters an inventory to only return servers matching ssid
+        """
+        matching_hosts = {}
+        for host in inventory:
+            if inventory[host]['comment'] == ssid:
+                matching_hosts[host] = inventory[host]
+
+        return matching_hosts
+
+    def inventory(self, all=False, ssid=None):
         """
         Returns a node inventory. If an API key is specified, only the nodes
          provisioned by this key will be returned.
@@ -79,9 +90,15 @@ class CicoWrapper(client.CicoClient):
         :return: { inventory }
         """
         if all or self.api_key is None:
-            return self.full_inventory
+            if ssid is not None:
+                return self._ssid_inventory(self.full_inventory, ssid)
+            else:
+                return self.full_inventory
         else:
-            return self.self_inventory
+            if ssid is not None:
+                return self._ssid_inventory(self.self_inventory, ssid)
+            else:
+                return self.self_inventory
 
     def node_get(self, arch=None, ver=None, count=1):
         """

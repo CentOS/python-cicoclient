@@ -34,6 +34,12 @@ class Inventory(Lister):
             default=False,
             help='Display all nodes, regardless if an API key is used.'
         )
+        parser.add_argument(
+            '--ssid',
+            metavar="<ssid>",
+            default=None,
+            help='Only return nodes matching the provided ssid.'
+        )
         return parser
 
     @utils.log_method(log)
@@ -43,7 +49,8 @@ class Inventory(Lister):
             api_key=self.app.options.api_key
         )
 
-        inventory = api.inventory(all=parsed_args.all)
+        inventory = api.inventory(all=parsed_args.all,
+                                  ssid=parsed_args.ssid)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
