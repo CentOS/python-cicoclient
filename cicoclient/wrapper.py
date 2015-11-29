@@ -61,7 +61,7 @@ class CicoWrapper(client.CicoClient):
         inventory instead for consistency.
         """
         if self.api_key is None:
-            return None
+            return {}
 
         resp, self_inventory = self.get('Inventory?key=%s' % self.api_key)
         real_self_inventory = dict()
