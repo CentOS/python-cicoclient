@@ -30,10 +30,8 @@ class CicoWrapper(client.CicoClient):
         except KeyError:
             self.api_key = None
 
-        self.full_inventory = self._full_inventory()
-        self.self_inventory = self._self_inventory()
-
-    def _full_inventory(self):
+    @property
+    def full_inventory(self):
         """
         Returns a full inventory
         Some additional work required to provide consistent and consumable
@@ -55,7 +53,8 @@ class CicoWrapper(client.CicoClient):
 
         return real_inventory
 
-    def _self_inventory(self):
+    @property
+    def self_inventory(self):
         """
         Inventory output will only contain the server name and the session ID
         when a key is provided. Provide the same format as with the full
