@@ -66,6 +66,12 @@ use ``ansible-doc`` to access it::
         api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         register: data
 
+    # Retrieve inventory tied to a SSID
+    - cico:
+        action: list
+        ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
+        register: data
+
     # Request one CentOS 7 x86_64 node
     - cico:
         action: get
@@ -100,6 +106,7 @@ The ``cico`` inventory action will allow you to retrieve the node inventory.
 - If you do not provide an API key, you will get the list of all nodes.
 - If you provide an API key, you will only get the inventory of nodes that are
   tied to your API key.
+- You can also provide a SSID to only return hosts matching this specific SSID.
 
 Example::
 
@@ -112,6 +119,12 @@ Example::
     - cico:
         action: list
         api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        register: data
+
+    # Retrieve inventory tied to a SSID
+    - cico:
+        action: list
+        ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
         register: data
 
 Requesting nodes

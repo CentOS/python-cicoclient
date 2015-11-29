@@ -70,6 +70,12 @@ EXAMPLES = '''
     api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     register: data
 
+# Retrieve inventory tied to a SSID
+- cico:
+    action: list
+    ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
+    register: data
+
 # Request one CentOS 7 x86_64 node
 - cico:
     action: get
@@ -159,10 +165,7 @@ def main():
             module.exit_json(changed=True, **data)
 
         if action == 'list':
-            if api_key is not None:
-                hosts = api.self_inventory
-            else:
-                hosts = api.full_inventory
+            hosts = api.inventory(ssid=ssid)
 
             data = {
                 'message': 'Listed servers successfully',

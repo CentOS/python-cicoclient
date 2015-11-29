@@ -67,9 +67,9 @@ The ``cico inventory`` command will allow you to retrieve the node inventory.
 
 - If you do not have an API key configured or if you use the ``--all`` argument,
   you will get the list of all nodes.
-
 - If you have an API key configured, you will only get the inventory of nodes
   that are tied to your API key.
+- You can also provide a SSID to only return hosts matching this specific SSID.
 
 Built-in help::
 
