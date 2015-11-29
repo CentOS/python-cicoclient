@@ -77,12 +77,14 @@ Built-in help::
         usage: cico inventory [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
                               [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}] [--all]
+                              [--ssid <ssid>]
 
-        Return a node inventory from the ci.centos.org infrastructure.
+        Returns a node inventory from the ci.centos.org infrastructure.
 
         optional arguments:
           -h, --help            show this help message and exit
           --all                 Display all nodes, regardless if an API key is used.
+          --ssid <ssid>         Only return nodes matching the provided ssid.
 
         output formatters:
           output formatter options
@@ -115,6 +117,16 @@ Usage::
         |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
         |      64 | node3.cluster | <obfuscated> | <cluster> |         67 | Deployed      | 3b413756-8967-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
         +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+
+        $ cico inventory --ssid b54cea7a-8a40-11e5-b2e3-525400ea212d
+        Starting new HTTP connection (1): admin.ci.centos.org
+        Resetting dropped connection: admin.ci.centos.org
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+
 
 Requesting nodes
 ~~~~~~~~~~~~~~~~
