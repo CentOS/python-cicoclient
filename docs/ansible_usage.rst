@@ -91,7 +91,7 @@ use ``ansible-doc`` to access it::
     - cico:
         action: done
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
-        ssid: data.ssid
+        ssid: data.results.ssid
 
     # Release nodes for a specific ssid
     - cico:
@@ -161,7 +161,7 @@ Example::
     - cico:
         action: done
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
-        ssid: data.ssid
+        ssid: data.results.ssid
 
     # Release nodes for a specific ssid
     - cico:
