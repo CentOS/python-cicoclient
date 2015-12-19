@@ -30,6 +30,8 @@ class CicoWrapper(client.CicoClient):
         except KeyError:
             self.api_key = None
 
+        self._full_inventory = self._self_inventory = None
+
     @property
     def full_inventory(self):
         """
@@ -39,6 +41,9 @@ class CicoWrapper(client.CicoClient):
         Inventory output only contains values, no keys - Add the keys to
         the output so that it can be consumed more easily.
         """
+        if self._full_inventory:
+            return self._full_inventory
+
         resp, inventory = self.get('Inventory')
 
         keys = ['host_id', 'hostname', 'ip_address', 'chassis',
@@ -51,7 +56,9 @@ class CicoWrapper(client.CicoClient):
             for key in keys:
                 real_inventory[host[1]][key] = host[keys.index(key)]
 
-        return real_inventory
+        self._full_inventory = real_inventory
+
+        return self._full_inventory
 
     @property
     def self_inventory(self):
@@ -63,13 +70,18 @@ class CicoWrapper(client.CicoClient):
         if self.api_key is None:
             return {}
 
+        if self._self_inventory:
+            return self._self_inventory
+
         resp, self_inventory = self.get('Inventory?key=%s' % self.api_key)
         real_self_inventory = dict()
 
         for host in self_inventory:
             real_self_inventory[host[0]] = self.full_inventory[host[0]]
 
-        return real_self_inventory
+        self._self_inventory = real_self_inventory
+
+        return self._self_inventory
 
     def _ssid_inventory(self, inventory, ssid):
         """
