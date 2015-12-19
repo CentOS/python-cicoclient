@@ -154,7 +154,7 @@ def main():
                 'hosts': hosts,
                 'ssid': new_ssid
             }
-            module.exit_json(changed=True, **data)
+            module.exit_json(changed=True, results=data)
 
         if action == 'done':
             hosts = api.node_done(ssid=ssid)
@@ -162,7 +162,7 @@ def main():
                 'message': 'Released servers successfully',
                 'hosts': hosts
             }
-            module.exit_json(changed=True, **data)
+            module.exit_json(changed=True, results=data)
 
         if action == 'list':
             hosts = api.inventory(ssid=ssid)
@@ -171,7 +171,7 @@ def main():
                 'message': 'Listed servers successfully',
                 'hosts': hosts
             }
-            module.exit_json(changed=True, **data)
+            module.exit_json(changed=True, results=data)
 
     except Exception as e:
         module.fail_json(msg=e.message)
