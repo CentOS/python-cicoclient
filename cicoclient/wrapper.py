@@ -133,6 +133,9 @@ class CicoWrapper(client.CicoClient):
 
         resp, body = self.get('Node/get?%s' % args)
 
+        if not body:
+            raise exceptions.NoInventory
+
         # Get the hosts that were requested.
         # Note: We have to iterate over full inventory instead of just the
         # hosts we got back from the response because the reply contains the

@@ -23,6 +23,14 @@ class ApiKeyRequired(Exception):
         return "The requested operation requires an API key."
 
 
+class NoInventory(Exception):
+    """
+    When requesting nodes from Duffy and no inventory is available
+    """
+    def __str__(self):
+        return "The requested operation failed as no inventory is available."
+
+
 class SsidRequired(Exception):
     """
     When running a command that requires an api key and the api key is not
