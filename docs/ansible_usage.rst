@@ -18,13 +18,6 @@ The ``cico`` Ansible module comes built-in with Ansible documentation, you can
 use ``ansible-doc`` to access it::
 
     $ ansible-doc -M cicoclient/ansible cico
-    less 481 (POSIX regular expressions)
-    Copyright (C) 1984-2015  Mark Nudelman
-
-    less comes with NO WARRANTY, to the extent permitted by law.
-    For information about the terms of redistribution,
-    see the file named README in the less distribution.
-    Homepage: http://www.greenwoodsoftware.com/less
     > CICO
 
       Ansible module to manage ci.centos.org node lifecycle
@@ -48,6 +41,12 @@ use ``ansible-doc`` to access it::
 
     - release
             CentOS release (Choices: 5, 6, 7) [Default: 7]
+
+    - retry_count
+            Amount of retries to do in case of failure. [Default: 1]
+
+    - retry_interval
+            Wait (in seconds) between subsequent retries. [Default: 10]
 
     - ssid
             SessionID, required with action 'done', optional with 'list'.
@@ -78,6 +77,14 @@ use ``ansible-doc`` to access it::
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         register: data
 
+    # Request one CentOS 7 x86_64 node with increased tolerance failure
+    - cico:
+        action: get
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        retry_count: 3
+        retry_interval: 60
+        register: data
+
     # Request two CentOS 6 i386 nodes
     - cico:
         action: get
@@ -91,13 +98,15 @@ use ``ansible-doc`` to access it::
     - cico:
         action: done
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
-        ssid: data.results.ssid
+        ssid: data.ssid
 
     # Release nodes for a specific ssid
     - cico:
         action: done
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
+
+    MAINTAINERS: David Moreau Simard <dms@redhat.com>
 
 Retrieving node inventory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,6 +147,14 @@ Example::
     - cico:
         action: get
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        register: data
+
+    # Request one CentOS 7 x86_64 node with increased tolerance failure
+    - cico:
+        action: get
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        retry_count: 3
+        retry_interval: 60
         register: data
 
     # Request two CentOS 6 i386 nodes

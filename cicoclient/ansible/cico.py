@@ -41,6 +41,14 @@ options:
         description:
             - Amount of nodes
         default: 1
+    retry_count:
+        description:
+            - Amount of retries to do in case of failure.
+        default: 1
+    retry_interval:
+        description:
+            - Wait (in seconds) between subsequent retries.
+        default: 10
     endpoint:
         description:
             - API endpoint
@@ -82,6 +90,14 @@ EXAMPLES = '''
     api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     register: data
 
+# Request one CentOS 7 x86_64 node with increased tolerance failure
+- cico:
+    action: get
+    api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+    retry_count: 3
+    retry_interval: 60
+    register: data
+
 # Request two CentOS 6 i386 nodes
 - cico:
     action: get
@@ -117,6 +133,8 @@ def main():
         arch=dict(default='x86_64', choices=['i386', 'x86_64']),
         release=dict(default='7', choices=['5', '6', '7']),
         count=dict(default='1'),
+        retry_count=dict(default='1'),
+        retry_interval=dict(default='10'),
         endpoint=dict(default='http://admin.ci.centos.org:8080/'),
         api_key=dict(default=os.getenv('CICO_API_KEY', None)),
         ssid=dict(default=None),
@@ -130,6 +148,8 @@ def main():
     arch = module.params['arch']
     release = module.params['release']
     count = module.params['count']
+    retry_count = module.params['retry_count']
+    retry_interval = module.params['retry_interval']
     endpoint = module.params['endpoint']
     api_key = module.params['api_key']
     ssid = module.params['ssid']
@@ -148,7 +168,9 @@ def main():
         )
 
         if action == 'get':
-            hosts, new_ssid = api.node_get(arch=arch, ver=release, count=count)
+            hosts, new_ssid = api.node_get(arch=arch, ver=release, count=count,
+                                           retry_count=retry_count,
+                                           retry_interval=retry_interval)
             data = {
                 'message': 'Requested servers successfully',
                 'hosts': hosts,
