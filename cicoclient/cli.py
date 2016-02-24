@@ -90,18 +90,18 @@ class NodeGet(Lister):
             help='Requested amount of servers. Defaults to 1.'
         )
         parser.add_argument(
-            '--try-count',
+            '--retry-count',
             metavar='<count>',
             type=int,
             default=1,
-            help='Number of attempts to make. Defaults to 1.'
+            help='Amount of retries to do in case of failure. Defaults to 1.'
         )
         parser.add_argument(
-            '--try-wait',
+            '--retry-interval',
             metavar='<seconds>',
             type=int,
-            default=30,
-            help='Wait between subsequent retries. Defaults to 30 (seconds).'
+            default=10,
+            help='Wait between subsequent retries. Defaults to 10 (seconds).'
         )
         return parser
 
@@ -115,8 +115,8 @@ class NodeGet(Lister):
         hosts, ssid = api.node_get(arch=parsed_args.arch,
                                    ver=parsed_args.release,
                                    count=parsed_args.count,
-                                   try_count=parsed_args.try_count,
-                                   try_wait=parsed_args.try_wait)
+                                   retry_count=parsed_args.retry_count,
+                                   retry_interval=parsed_args.retry_interval)
         message = "SSID for these servers: %s\n" % ssid
         sys.stdout.write(message)
 

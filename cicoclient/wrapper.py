@@ -114,15 +114,16 @@ class CicoWrapper(client.CicoClient):
             else:
                 return self.self_inventory
 
-    def node_get(self, arch=None, ver=None, count=1, try_count=1, try_wait=30):
+    def node_get(self, arch=None, ver=None, count=1, retry_count=1,
+                 retry_interval=10):
         """
         Requests specified amount of nodes with the provided parameters.
 
         :param arch: Server architecture (ex: x86_64)
         :param ver: CentOS version (ex: 7)
         :param count: Amount of servers (ex: 2)
-        :param try_count: Number of times to try (ex: 10)
-        :param try_wait: Wait in seconds between each retry (ex: 30)
+        :param retry_count: Number of times to retry in case of failure (ex: 5)
+        :param retry_interval: Wait in seconds between each retry (ex: 30)
         :return: [ [ requested_hosts ], ssid ]
         """
         if self.api_key is None:
@@ -137,8 +138,8 @@ class CicoWrapper(client.CicoClient):
 
         resp, body = self.get('Node/get?%s' % args)
         if not body:
-            for _ in range(try_count - 1):
-                time.sleep(try_wait)
+            for _ in range(retry_count - 1):
+                time.sleep(retry_interval)
                 resp, body = self.get('Node/get?%s' % args)
                 if body:
                     break
