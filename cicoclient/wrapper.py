@@ -138,7 +138,7 @@ class CicoWrapper(client.CicoClient):
 
         resp, body = self.get('Node/get?%s' % args)
         if not body:
-            for _ in range(retry_count - 1):
+            for _ in range(retry_count):
                 time.sleep(retry_interval)
                 resp, body = self.get('Node/get?%s' % args)
                 if body:
