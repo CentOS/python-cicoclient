@@ -140,6 +140,7 @@ Built-in help::
                              [--max-width <integer>] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}] [--arch <arch>]
                              [--release <release>] [--count <count>]
+                             [--retry-count <count>] [--retry-interval <seconds>]
 
         Requests nodes from the ci.centos.org infrastructure
 
@@ -148,6 +149,12 @@ Built-in help::
           --arch <arch>         Requested server architecture. Defaults to x86_64.
           --release <release>   Requested CentOS release. Defaults to 7.
           --count <count>       Requested amount of servers. Defaults to 1.
+          --retry-count <count>
+                                Amount of retries to do in case of failure. Defaults
+                                to 1.
+          --retry-interval <seconds>
+                                Wait between subsequent retries. Defaults to 10
+                                (seconds).
 
         output formatters:
           output formatter options
@@ -170,7 +177,7 @@ Built-in help::
 
 Usage::
 
-        $ cico node get --arch x86_64 --release 7 --count 1
+        $ cico node get --arch x86_64 --release 7 --count 1 --retry-count 2 --retry-interval 30
         Starting new HTTP connection (1): admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
