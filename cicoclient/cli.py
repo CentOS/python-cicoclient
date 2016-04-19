@@ -117,8 +117,6 @@ class NodeGet(Lister):
                                    count=parsed_args.count,
                                    retry_count=parsed_args.retry_count,
                                    retry_interval=parsed_args.retry_interval)
-        message = "SSID for these servers: %s\n" % ssid
-        sys.stdout.write(message)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
@@ -151,8 +149,6 @@ class NodeDone(Lister):
         )
 
         hosts = api.node_done(ssid=parsed_args.ssid)
-        message = "Released these servers with SSID: %s\n" % parsed_args.ssid
-        sys.stdout.write(message)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
