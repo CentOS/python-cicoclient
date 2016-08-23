@@ -4,7 +4,7 @@ Release:          1
 Summary:          Client interfaces to admin.ci.centos.org
 
 License:          ASL 2.0
-URL:              http://github.com/dmsimard/%{name}
+URL:              http://github.com/CentOS/%{name}
 Source0:          http://pypi.python.org/packages/source/p/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
