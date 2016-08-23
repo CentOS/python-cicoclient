@@ -1,6 +1,6 @@
 Name:             python-cicoclient
 Version:          0.3.9
-Release:          dev
+Release:          1
 Summary:          Client interfaces to admin.ci.centos.org
 
 License:          ASL 2.0
@@ -17,6 +17,9 @@ BuildRequires:    python-requests
 BuildRequires:    python-setuptools
 BuildRequires:    python-simplejson
 BuildRequires:    python-six
+
+# Work around an old version of python-sphinx_rtd_theme in CBS
+BuildRequires:    fontawesome-fonts-web
 
 Requires:         python-cliff >= 1.14.0
 Requires:         python-pbr >= 1.6
@@ -78,3 +81,6 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Tue Aug 23 2016 brian@bstinson.com 0.3.9-1
+- Build in the CentOS infrastructure tags
+
