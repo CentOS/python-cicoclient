@@ -1,11 +1,11 @@
 Name:             python-cicoclient
-Version:          0.3.9
+Version:          0.3.10
 Release:          1%{?dist}
 Summary:          Client interfaces to admin.ci.centos.org
 
 License:          ASL 2.0
-URL:              http://github.com/CentOS/%{name}
-Source0:          http://pypi.python.org/packages/source/p/%{name}/%{name}-%{version}.tar.gz
+URL:              https://github.com/CentOS/%{name}
+Source0:          https://pypi.io/packages/source/P/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
