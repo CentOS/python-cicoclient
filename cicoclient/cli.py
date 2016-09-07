@@ -29,12 +29,6 @@ class Inventory(Lister):
     def get_parser(self, prog_name):
         parser = super(Inventory, self).get_parser(prog_name)
         parser.add_argument(
-            '--all',
-            action='store_true',
-            default=False,
-            help='Display all nodes, regardless if an API key is used.'
-        )
-        parser.add_argument(
             '--ssid',
             metavar="<ssid>",
             default=None,
@@ -49,15 +43,14 @@ class Inventory(Lister):
             api_key=self.app.options.api_key
         )
 
-        inventory = api.inventory(all=parsed_args.all,
-                                  ssid=parsed_args.ssid)
+        inventory = api.inventory(ssid=parsed_args.ssid)
 
-        columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                   'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+        columns = ('id', 'hostname', 'ip', 'comment', 'state', 'distro', 'rel',
+                   'ver', 'arch', 'chassis', 'pool', 'console_port',
+                   'used_count')
 
         return (columns,
-                (utils.get_dict_properties(inventory[host], columns)
+                (utils.get_dict_properties(host, columns)
                  for host in inventory))
 
 
@@ -118,12 +111,12 @@ class NodeGet(Lister):
                                    retry_count=parsed_args.retry_count,
                                    retry_interval=parsed_args.retry_interval)
 
-        columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                   'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+        columns = ('id', 'hostname', 'ip', 'comment', 'state', 'distro', 'rel',
+                   'ver', 'arch', 'chassis', 'pool', 'console_port',
+                   'used_count')
 
         return (columns,
-                (utils.get_dict_properties(hosts[host], columns)
+                (utils.get_dict_properties(host, columns)
                  for host in hosts))
 
 
@@ -150,10 +143,10 @@ class NodeDone(Lister):
 
         hosts = api.node_done(ssid=parsed_args.ssid)
 
-        columns = ('host_id', 'hostname', 'ip_address', 'chassis',
-                   'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+        columns = ('id', 'hostname', 'ip', 'comment', 'state', 'distro', 'rel',
+                   'ver', 'arch', 'chassis', 'pool', 'console_port',
+                   'used_count')
 
         return (columns,
-                (utils.get_dict_properties(hosts[host], columns)
+                (utils.get_dict_properties(host, columns)
                  for host in hosts))

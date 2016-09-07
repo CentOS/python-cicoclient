@@ -56,6 +56,7 @@ options:
     api_key:
         description:
             - API key
+        require: true
         default: CICO_API_KEY environment variable or None
     ssid:
         description:
@@ -67,21 +68,17 @@ requirements:
 '''
 
 EXAMPLES = '''
-# Retrieve full inventory
-- cico:
-    action: list
-    register: data
-
 # Retrieve inventory tied to API key
 - cico:
     action: list
-    api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+    api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     register: data
 
 # Retrieve inventory tied to a SSID
 - cico:
     action: list
-    ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
+    api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+    ssid: 3e03553f
     register: data
 
 # Request one CentOS 7 x86_64 node

@@ -30,89 +30,43 @@ class CicoWrapper(client.CicoClient):
         try:
             self.api_key = params['api_key']
         except KeyError:
-            self.api_key = None
+            raise AttributeError('Parameter api_key is required. See cico -h.')
 
-        self._full_inventory = self._self_inventory = None
+    def inventory(self, ssid=None):
+        """
+        Returns a node inventory. If an SSID is specified, only the nodes tied
+        to this SSID will be returned.
+
+        :param ssid: Filter inventory to find nodes for a specific ssid
+        :return: { inventory }
+        """
+        if ssid is not None:
+            return self._ssid_inventory(self._inventory, ssid)
+        else:
+            return self._inventory
 
     @property
-    def full_inventory(self):
+    def _inventory(self):
         """
-        Returns a full inventory
-        Some additional work required to provide consistent and consumable
-        output.
-        Inventory output only contains values, no keys - Add the keys to
-        the output so that it can be consumed more easily.
+        Requests node inventory from Duffy that are tied to the user's API
+        key
+
+        :return: List of nodes in a dictionary
         """
-        if self._full_inventory:
-            return self._full_inventory
+        resp, inventory = self.get('v1/Inventory?key=%s' % self.api_key)
 
-        resp, inventory = self.get('Inventory')
-
-        keys = ['host_id', 'hostname', 'ip_address', 'chassis',
-                'used_count', 'current_state', 'comment', 'distro',
-                'rel', 'centos_version', 'architecture', 'node_pool']
-
-        real_inventory = dict()
-        for host in inventory:
-            real_inventory[host[1]] = dict()
-            for key in keys:
-                real_inventory[host[1]][key] = host[keys.index(key)]
-
-        self._full_inventory = real_inventory
-
-        return self._full_inventory
-
-    @property
-    def self_inventory(self):
-        """
-        Inventory output will only contain the server name and the session ID
-        when a key is provided. Provide the same format as with the full
-        inventory instead for consistency.
-        """
-        if self.api_key is None:
-            return {}
-
-        if self._self_inventory:
-            return self._self_inventory
-
-        resp, self_inventory = self.get('Inventory?key=%s' % self.api_key)
-        real_self_inventory = dict()
-
-        for host in self_inventory:
-            real_self_inventory[host[0]] = self.full_inventory[host[0]]
-
-        self._self_inventory = real_self_inventory
-
-        return self._self_inventory
+        return inventory
 
     def _ssid_inventory(self, inventory, ssid):
         """
         Filters an inventory to only return servers matching ssid
         """
-        matching_hosts = {}
+        matching_hosts = []
         for host in inventory:
-            if inventory[host]['comment'] == ssid:
-                matching_hosts[host] = inventory[host]
+            if host['comment'] == ssid:
+                matching_hosts.append(host)
 
         return matching_hosts
-
-    def inventory(self, all=False, ssid=None):
-        """
-        Returns a node inventory. If an API key is specified, only the nodes
-         provisioned by this key will be returned.
-
-        :return: { inventory }
-        """
-        if all or self.api_key is None:
-            if ssid is not None:
-                return self._ssid_inventory(self.full_inventory, ssid)
-            else:
-                return self.full_inventory
-        else:
-            if ssid is not None:
-                return self._ssid_inventory(self.self_inventory, ssid)
-            else:
-                return self.self_inventory
 
     def node_get(self, arch=None, ver=None, count=1, retry_count=1,
                  retry_interval=10):
@@ -126,9 +80,6 @@ class CicoWrapper(client.CicoClient):
         :param retry_interval: Wait in seconds between each retry (ex: 30)
         :return: [ [ requested_hosts ], ssid ]
         """
-        if self.api_key is None:
-            raise exceptions.ApiKeyRequired
-
         args = "key=%s" % self.api_key
         if arch is not None:
             args += "&arch=%s" % arch
@@ -147,15 +98,14 @@ class CicoWrapper(client.CicoClient):
         if not body:
             raise exceptions.NoInventory
 
-        # Get the hosts that were requested.
-        # Note: We have to iterate over full inventory instead of just the
-        # hosts we got back from the response because the reply contains the
-        # fqdn of the host while the full inventory only contains a short name.
-        requested_hosts = dict()
-        for host in self.full_inventory:
-            for full_host in body['hosts']:
-                if host in full_host:
-                    requested_hosts[host] = self.full_inventory[host]
+        # The Node/get call returns limited information for the requested hosts.
+        # Do a new inventory call to retrieve details about the hosts so that
+        # output is consistent with the inventory call.
+        requested_hosts = []
+        for host in self._inventory:
+            for hostname in body['hosts']:
+                if host['hostname'] in hostname:
+                    requested_hosts.append(host)
 
         return requested_hosts, body['ssid']
 
@@ -168,18 +118,15 @@ class CicoWrapper(client.CicoClient):
         :param ssid: ssid of the server pool
         :return: [ requested_hosts ]
         """
-        if self.api_key is None:
-            raise exceptions.ApiKeyRequired
-
         if ssid is None:
             raise exceptions.SsidRequired
 
         # There is no body replied in this call so at least get the hosts for
         # the specified ssid to return them.
-        requested_hosts = dict()
-        for host in self.self_inventory:
-            if ssid == self.self_inventory[host]['comment']:
-                requested_hosts[host] = self.full_inventory[host]
+        requested_hosts = []
+        for host in self._inventory:
+            if ssid == host['comment']:
+                requested_hosts.append(host)
 
         args = "key={key}&ssid={ssid}".format(key=self.api_key, ssid=ssid)
 

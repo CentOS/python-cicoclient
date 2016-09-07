@@ -27,7 +27,7 @@ use ``ansible-doc`` to access it::
     = action
             Action to take (Choices: get, done, list)
 
-    - api_key
+    = api_key
             API key [Default: CICO_API_KEY environment variable or None]
 
     - arch
@@ -54,21 +54,17 @@ use ``ansible-doc`` to access it::
     Requirements:  python >= 2.6, python-cicoclient
 
     EXAMPLES:
-    # Retrieve full inventory
-    - cico:
-        action: list
-        register: data
-
     # Retrieve inventory tied to API key
     - cico:
         action: list
-        api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         register: data
 
     # Retrieve inventory tied to a SSID
     - cico:
         action: list
-        ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
         register: data
 
     # Request one CentOS 7 x86_64 node
@@ -119,21 +115,17 @@ The ``cico`` inventory action will allow you to retrieve the node inventory.
 
 Example::
 
-    # Retrieve full inventory
-    - cico:
-        action: list
-        register: data
-
     # Retrieve inventory tied to API key
     - cico:
         action: list
-        api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         register: data
 
     # Retrieve inventory tied to a SSID
     - cico:
         action: list
-        ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
+        api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
+        ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
         register: data
 
 Requesting nodes

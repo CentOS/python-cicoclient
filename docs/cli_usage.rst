@@ -76,14 +76,13 @@ Built-in help::
         $ cico help inventory
         usage: cico inventory [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
                               [--max-width <integer>] [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}] [--all]
+                              [--quote {all,minimal,none,nonnumeric}]
                               [--ssid <ssid>]
 
         Returns a node inventory from the ci.centos.org infrastructure.
 
         optional arguments:
           -h, --help            show this help message and exit
-          --all                 Display all nodes, regardless if an API key is used.
           --ssid <ssid>         Only return nodes matching the provided ssid.
 
         output formatters:
@@ -108,25 +107,85 @@ Built-in help::
 Usage::
 
         $ cico inventory
-        Starting new HTTP connection (1): admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |     170 | node1.cluster | <obfuscated> | <cluster> |         66 | Deployed      | e0c382aa-8a30-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        |      64 | node3.cluster | <obfuscated> | <cluster> |         67 | Deployed      | 3b413756-8967-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | id | hostname   | ip          | comment  | state    | distro | rel  | ver | arch   | chassis | pool | console_port | used_count |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | 12 | n1.cluster | 172.19.3.1  | e90b20b8 | Deployed | None   | None | 7   | x86_64 | cluster |    0 |         2110 |        102 |
+        |  2 | n2.cluster | 172.19.3.2  | ea32338c | Deployed | None   | None | 7   | x86_64 | cluster |    0 |         2010 |        141 |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
 
-        $ cico inventory --ssid b54cea7a-8a40-11e5-b2e3-525400ea212d
-        Starting new HTTP connection (1): admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        $ cico inventory --ssid e90b20b8
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | id | hostname   | ip          | comment  | state    | distro | rel  | ver | arch   | chassis | pool | console_port | used_count |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | 12 | n1.cluster | 172.19.3.1  | e90b20b8 | Deployed | None   | None | 7   | x86_64 | cluster |    0 |         2110 |        102 |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
 
+        $ cico inventory -f value -c hostname -c ip -c comment
+        n1.cluster 172.19.3.1 e90b20b8
+        n2.cluster 172.19.3.2 ea32338c
+
+        $ cico inventory -f json
+        [
+          {
+            "comment": "e90b20b8",
+            "ver": "7",
+            "ip": "172.19.3.1",
+            "hostname": "n1.cluster",
+            "state": "Deployed",
+            "chassis": "cluster",
+            "used_count": 102,
+            "rel": null,
+            "console_port": 2110,
+            "arch": "x86_64",
+            "id": 12,
+            "pool": 0,
+            "distro": null
+          },
+          {
+            "comment": "ea32338c",
+            "ver": "7",
+            "ip": "172.19.3.2",
+            "hostname": "n2.cluster",
+            "state": "Deployed",
+            "chassis": "cluster",
+            "used_count": 141,
+            "rel": null,
+            "console_port": 2010,
+            "arch": "x86_64",
+            "id": 2,
+            "pool": 0,
+            "distro": null
+          }
+        ]
+
+        $ cico inventory -f yaml
+        - arch: x86_64
+          chassis: cluster
+          comment: e90b20b8
+          console_port: 2110
+          distro: null
+          hostname: n1.cluster
+          id: 12
+          ip: 172.19.3.1
+          pool: 0
+          rel: null
+          state: Deployed
+          used_count: 102
+          ver: '7'
+        - arch: x86_64
+          chassis: cluster
+          comment: ea32338c
+          console_port: 2010
+          distro: null
+          hostname: n2.cluster
+          id: 2
+          ip: 172.19.3.2
+          pool: 0
+          rel: null
+          state: Deployed
+          used_count: 141
+          ver: '7'
 
 Requesting nodes
 ~~~~~~~~~~~~~~~~
@@ -178,15 +237,11 @@ Built-in help::
 Usage::
 
         $ cico node get --arch x86_64 --release 7 --count 1 --retry-count 2 --retry-interval 30
-        Starting new HTTP connection (1): admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        SSID for these servers: 8fd381ea-8a46-11e5-b2e3-525400ea212d
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
-        | host_id |    hostname    |  ip_address  | chassis | used_count | current_state | comment | distro | rel  | centos_version | architecture | node_pool |
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
-        |     117 | node4.cluster  | <obfuscated> | cluster |         69 | Ready         | -       | None   | None | 7              | x86_64       |         1 |
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | id | hostname   | ip          | comment  | state    | distro | rel  | ver | arch   | chassis | pool | console_port | used_count |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | 12 | n1.cluster | 172.19.3.1  | e90b20b8 | Deployed | None   | None | 7   | x86_64 | cluster |    0 |         2110 |        102 |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
 
 Releasing nodes
 ~~~~~~~~~~~~~~~
@@ -232,16 +287,12 @@ Built-in help::
 
 Usage::
 
-        $ cico node done 8fd381ea-8a46-11e5-b2e3-525400ea212d
-        Starting new HTTP connection (1): admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        Resetting dropped connection: admin.ci.centos.org
-        Released these servers with SSID: 8fd381ea-8a46-11e5-b2e3-525400ea212d
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |    hostname   |  ip_address  | chassis | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |     117 | node4.cluster | <obfuscated> | cluster |         69 | Deployed      | 8fd381ea-8a46-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         1 |
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        $ cico node done e90b20b8
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | id | hostname   | ip          | comment  | state    | distro | rel  | ver | arch   | chassis | pool | console_port | used_count |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
+        | 12 | n1.cluster | 172.19.3.1  | e90b20b8 | Deployed | None   | None | 7   | x86_64 | cluster |    0 |         2110 |        102 |
+        +----+------------+-------------+----------+----------+--------+------+-----+--------+---------+------+--------------+------------+
 
 .. _Duffy documentation: https://wiki.centos.org/QaWiki/CI/Duffy
 .. _cliff: https://pypi.python.org/pypi/cliff
