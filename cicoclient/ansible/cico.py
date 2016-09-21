@@ -136,7 +136,7 @@ def main():
         retry_count=dict(default='1'),
         retry_interval=dict(default='10'),
         endpoint=dict(default='http://admin.ci.centos.org:8080/'),
-        api_key=dict(default=os.getenv('CICO_API_KEY', None)),
+        api_key=dict(default=os.getenv('CICO_API_KEY', None), no_log=True),
         ssid=dict(default=None),
     )
     module = AnsibleModule(argument_spec)
