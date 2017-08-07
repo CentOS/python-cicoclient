@@ -31,7 +31,7 @@ use ``ansible-doc`` to access it::
             API key [Default: CICO_API_KEY environment variable or None]
 
     - arch
-            Server architecture (Choices: i386, x86_64) [Default: x86_64]
+            Server architecture (Choices: i386, x86_64, aarch64, ppc64le) [Default: x86_64]
 
     - count
             Amount of nodes [Default: 1]
@@ -41,6 +41,10 @@ use ``ansible-doc`` to access it::
 
     - release
             CentOS release (Choices: 5, 6, 7) [Default: 7]
+
+    - flavor
+        The flavor (size) of an altarch Node
+        (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium)[Default: small]
 
     - retry_count
             Amount of retries to do in case of failure. [Default: 1]
