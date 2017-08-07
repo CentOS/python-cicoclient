@@ -71,7 +71,7 @@ class NodeGet(Lister):
         parser.add_argument(
             '--arch',
             metavar='<arch>',
-            choices=['i386', 'x86_64'],
+            choices=['i386', 'x86_64', 'aarch64', 'ppc64le'],
             default='x86_64',
             help='Requested server architecture. Defaults to x86_64.'
         )
