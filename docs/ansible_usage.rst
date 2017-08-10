@@ -44,7 +44,7 @@ use ``ansible-doc`` to access it::
 
     - flavor
         The flavor (size) of an altarch Node
-        (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium)[Default: small]
+        (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large)[Default: small]
 
     - retry_count
             Amount of retries to do in case of failure. [Default: 1]

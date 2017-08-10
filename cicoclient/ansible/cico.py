@@ -40,7 +40,7 @@ options:
     flavor:
         description:
             - The flavor (size) of an altarch Node
-        choices: [tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium]
+        choices: [tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large]
         default: small
 
     count:

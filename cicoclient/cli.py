@@ -110,7 +110,7 @@ class NodeGet(Lister):
             default=None,
             choices=['tiny', 'small', 'medium', 'lram.tiny', 'lram.small',
                      'lram.medium', 'xram.tiny', 'xram.small',
-                     'xram.medium'],
+                     'xram.medium', 'xram.large'],
             help='The flavor of the node.'
         )
         return parser
