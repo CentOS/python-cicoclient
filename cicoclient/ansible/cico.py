@@ -137,6 +137,10 @@ def main():
     argument_spec = dict(
         action=dict(required=True, choices=['get', 'done', 'list']),
         arch=dict(default='x86_64', choices=['i386', 'x86_64', 'aarch64', 'ppc64le']),
+        flavor=dict(default='small', choices=['tiny', 'small', 'medium',
+                                              'lram.tiny', 'lram.small',
+                                              'xram.tiny', 'xram.small',
+                                              'xram.medium', 'xram.large']),
         release=dict(default='7', choices=['5', '6', '7']),
         count=dict(default=1, type='int'),
         retry_count=dict(default=1, type='int'),
