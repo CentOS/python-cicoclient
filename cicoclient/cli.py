@@ -132,7 +132,7 @@ class NodeGet(Lister):
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
                    'rel', 'centos_version', 'architecture', 'node_pool',
-                   'flavor')
+                   'console_port', 'flavor')
 
         return (columns,
                 (utils.get_dict_properties(hosts[host], columns)
@@ -165,7 +165,7 @@ class NodeDone(Lister):
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
                    'rel', 'centos_version', 'architecture', 'node_pool',
-                   'flavor')
+                   'console_port', 'flavor')
 
         return (columns,
                 (utils.get_dict_properties(hosts[host], columns)
