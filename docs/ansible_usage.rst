@@ -43,7 +43,7 @@ use ``ansible-doc`` to access it::
             CentOS release (Choices: 5, 6, 7) [Default: 7]
 
     - flavor
-        The flavor (size) of an altarch Node
+        The flavor (size) of an altarch Node (ignored on baremetal x86_64)
         (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large)[Default: small]
 
     - retry_count

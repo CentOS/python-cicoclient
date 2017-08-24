@@ -156,7 +156,7 @@ Built-in help::
           --retry-interval <seconds>
                                 Wait between subsequent retries. Defaults to 10
                                 (seconds).
-          --flavor <flavor>     The flavor of the node.
+          --flavor <flavor>     The flavor of the node. (This is ignored for x86_64 baremetal nodes)
 
         output formatters:
           output formatter options
