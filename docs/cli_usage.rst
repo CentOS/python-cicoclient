@@ -110,22 +110,22 @@ Usage::
         $ cico inventory
         Starting new HTTP connection (1): admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |     170 | node1.cluster | <obfuscated> | <cluster> |         66 | Deployed      | e0c382aa-8a30-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        |      64 | node3.cluster | <obfuscated> | <cluster> |         67 | Deployed      | 3b413756-8967-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool | console_port | flavor      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        |     170 | node1.cluster | <obfuscated> | <cluster> |         66 | Deployed      | e0c382aa                             | None   | None | 7              | x86_64       |         0 | 1234         | small       |
+        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a                             | None   | None | 7              | x86_64       |         0 | 5678         | medium      |
+        |      64 | node3.cluster | <obfuscated> | <cluster> |         67 | Deployed      | 3b413756                             | None   | None | 7              | x86_64       |         0 | 2349         | tiny        |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
 
         $ cico inventory --ssid b54cea7a-8a40-11e5-b2e3-525400ea212d
         Starting new HTTP connection (1): admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a-8a40-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         0 |
-        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool | console_port | flavor      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        |      21 | node2.cluster | <obfuscated> | <cluster> |         66 | Deployed      | b54cea7a                             | None   | None | 7              | x86_64       |         0 | 5678         | medium      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
 
 
 Requesting nodes
@@ -137,10 +137,11 @@ Built-in help::
 
         $ cico help node get
         usage: cico node get [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}] [--arch <arch>]
-                             [--release <release>] [--count <count>]
-                             [--retry-count <count>] [--retry-interval <seconds>]
+                     [--max-width <integer>] [--fit-width] [--print-empty]
+                     [--noindent] [--quote {all,minimal,none,nonnumeric}]
+                     [--arch <arch>] [--release <release>] [--count <count>]
+                     [--retry-count <count>] [--retry-interval <seconds>]
+                     [--flavor <flavor>]
 
         Requests nodes from the ci.centos.org infrastructure
 
@@ -155,6 +156,7 @@ Built-in help::
           --retry-interval <seconds>
                                 Wait between subsequent retries. Defaults to 10
                                 (seconds).
+          --flavor <flavor>     The flavor of the node. (This is ignored for x86_64 baremetal nodes)
 
         output formatters:
           output formatter options
@@ -181,12 +183,12 @@ Usage::
         Starting new HTTP connection (1): admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
-        SSID for these servers: 8fd381ea-8a46-11e5-b2e3-525400ea212d
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
-        | host_id |    hostname    |  ip_address  | chassis | used_count | current_state | comment | distro | rel  | centos_version | architecture | node_pool |
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
-        |     117 | node4.cluster  | <obfuscated> | cluster |         69 | Ready         | -       | None   | None | 7              | x86_64       |         1 |
-        +---------+----------------+--------------+---------+------------+---------------+---------+--------+------+----------------+--------------+-----------+
+        SSID for these servers: 8fd381ea
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool | console_port | flavor      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        |     117 | node4.cluster | <obfuscated> | <cluster> |         69 | Ready         | -                                    | None   | None | 7              | x86_64       |         1 | 5678         | medium      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
 
 Releasing nodes
 ~~~~~~~~~~~~~~~
@@ -237,11 +239,11 @@ Usage::
         Resetting dropped connection: admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
         Released these servers with SSID: 8fd381ea-8a46-11e5-b2e3-525400ea212d
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        | host_id |    hostname   |  ip_address  | chassis | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool |
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
-        |     117 | node4.cluster | <obfuscated> | cluster |         69 | Deployed      | 8fd381ea-8a46-11e5-b2e3-525400ea212d | None   | None | 7              | x86_64       |         1 |
-        +---------+---------------+--------------+---------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool | console_port | flavor      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        |     117 | node4.cluster | <obfuscated> | <cluster> |         69 | Deployed      | 8fd381ea                             | None   | None | 7              | x86_64       |         1 | 5678         | medium      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
 
 .. _Duffy documentation: https://wiki.centos.org/QaWiki/CI/Duffy
 .. _cliff: https://pypi.python.org/pypi/cliff

@@ -30,13 +30,19 @@ options:
     arch:
         description:
             - Server architecture
-        choices: [i386, x86_64]
+        choices: [i386, x86_64, aarch64, ppc64le]
         default: x86_64
     release:
         description:
             - CentOS release
         choices: [5, 6, 7]
         default: 7
+    flavor:
+        description:
+            - The flavor (size) of an altarch Node
+        choices: [tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large]
+        default: small
+
     count:
         description:
             - Amount of nodes
@@ -130,7 +136,11 @@ except ImportError:
 def main():
     argument_spec = dict(
         action=dict(required=True, choices=['get', 'done', 'list']),
-        arch=dict(default='x86_64', choices=['i386', 'x86_64']),
+        arch=dict(default='x86_64', choices=['i386', 'x86_64', 'aarch64', 'ppc64le']),
+        flavor=dict(default='small', choices=['tiny', 'small', 'medium',
+                                              'lram.tiny', 'lram.small',
+                                              'xram.tiny', 'xram.small',
+                                              'xram.medium', 'xram.large']),
         release=dict(default='7', choices=['5', '6', '7']),
         count=dict(default=1, type='int'),
         retry_count=dict(default=1, type='int'),
@@ -153,6 +163,7 @@ def main():
     endpoint = module.params['endpoint']
     api_key = module.params['api_key']
     ssid = module.params['ssid']
+    flavor = module.params['flavor']
 
     # Pre-flight validation
     if api_key is None:
@@ -170,7 +181,8 @@ def main():
         if action == 'get':
             hosts, new_ssid = api.node_get(arch=arch, ver=release, count=count,
                                            retry_count=retry_count,
-                                           retry_interval=retry_interval)
+                                           retry_interval=retry_interval,
+                                           flavor=flavor)
             data = {
                 'message': 'Requested servers successfully',
                 'hosts': hosts,

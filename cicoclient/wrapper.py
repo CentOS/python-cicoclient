@@ -50,7 +50,8 @@ class CicoWrapper(client.CicoClient):
 
         keys = ['host_id', 'hostname', 'ip_address', 'chassis',
                 'used_count', 'current_state', 'comment', 'distro',
-                'rel', 'centos_version', 'architecture', 'node_pool']
+                'rel', 'centos_version', 'architecture', 'node_pool',
+                'console_port', 'flavor']
 
         real_inventory = dict()
         for host in inventory:
@@ -114,14 +115,15 @@ class CicoWrapper(client.CicoClient):
             else:
                 return self.self_inventory
 
-    def node_get(self, arch=None, ver=None, count=1, retry_count=1,
-                 retry_interval=10):
+    def node_get(self, arch=None, ver=None, flavor=None, count=1,
+                 retry_count=1, retry_interval=10):
         """
         Requests specified amount of nodes with the provided parameters.
 
         :param arch: Server architecture (ex: x86_64)
         :param ver: CentOS version (ex: 7)
         :param count: Amount of servers (ex: 2)
+        :parma flavor: The flavor of machine to use (multi-arch only)
         :param retry_count: Number of times to retry in case of failure (ex: 5)
         :param retry_interval: Wait in seconds between each retry (ex: 30)
         :return: [ [ requested_hosts ], ssid ]
@@ -134,6 +136,8 @@ class CicoWrapper(client.CicoClient):
             args += "&arch=%s" % arch
         if ver is not None:
             args += "&ver=%s" % ver
+        if flavor is not None:
+            args += "&flavor=%s" % flavor
         args += "&count=%s" % count
 
         resp, body = self.get('Node/get?%s' % args)

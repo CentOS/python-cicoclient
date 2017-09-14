@@ -54,7 +54,8 @@ class Inventory(Lister):
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+                   'rel', 'centos_version', 'architecture', 'node_pool',
+                   'console_port', 'flavor')
 
         return (columns,
                 (utils.get_dict_properties(inventory[host], columns)
@@ -71,7 +72,7 @@ class NodeGet(Lister):
         parser.add_argument(
             '--arch',
             metavar='<arch>',
-            choices=['i386', 'x86_64'],
+            choices=['i386', 'x86_64', 'aarch64', 'ppc64le'],
             default='x86_64',
             help='Requested server architecture. Defaults to x86_64.'
         )
@@ -103,6 +104,15 @@ class NodeGet(Lister):
             default=10,
             help='Wait between subsequent retries. Defaults to 10 (seconds).'
         )
+        parser.add_argument(
+            '--flavor',
+            metavar='<flavor>',
+            default=None,
+            choices=['tiny', 'small', 'medium', 'lram.tiny', 'lram.small',
+                     'lram.medium', 'xram.tiny', 'xram.small',
+                     'xram.medium', 'xram.large'],
+            help='The flavor of the node.'
+        )
         return parser
 
     @utils.log_method(log)
@@ -116,11 +126,13 @@ class NodeGet(Lister):
                                    ver=parsed_args.release,
                                    count=parsed_args.count,
                                    retry_count=parsed_args.retry_count,
-                                   retry_interval=parsed_args.retry_interval)
+                                   retry_interval=parsed_args.retry_interval,
+                                   flavor=parsed_args.flavor)
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+                   'rel', 'centos_version', 'architecture', 'node_pool',
+                   'console_port', 'flavor')
 
         return (columns,
                 (utils.get_dict_properties(hosts[host], columns)
@@ -152,7 +164,8 @@ class NodeDone(Lister):
 
         columns = ('host_id', 'hostname', 'ip_address', 'chassis',
                    'used_count', 'current_state', 'comment', 'distro',
-                   'rel', 'centos_version', 'architecture', 'node_pool')
+                   'rel', 'centos_version', 'architecture', 'node_pool',
+                   'console_port', 'flavor')
 
         return (columns,
                 (utils.get_dict_properties(hosts[host], columns)
