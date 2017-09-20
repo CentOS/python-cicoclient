@@ -14,7 +14,6 @@
 #
 
 import sys
-import os
 
 import cicoclient
 from cliff.app import App

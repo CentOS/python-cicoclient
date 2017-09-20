@@ -13,6 +13,9 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 #
+
+from ansible.module_utils.basic import AnsibleModule
+
 DOCUMENTATION = '''
 ---
 module: cico
@@ -40,7 +43,17 @@ options:
     flavor:
         description:
             - The flavor (size) of an altarch Node
-        choices: [tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large]
+        choices:
+        - tiny
+        - small
+        - medium
+        - lram.tiny
+        - lram.small
+        - lram.medium
+        - xram.tiny
+        - xram.small
+        - xram.medium
+        - xram.large
         default: small
 
     count:
@@ -62,7 +75,9 @@ options:
     api_key:
         description:
             - API key
-        default: CICO_API_KEY environment variable, the contents of ~/.duffy.key, the contents of ~/duffy.key, or None
+        default: >
+          CICO_API_KEY environment variable, the contents of ~/.duffy.key,
+          the contents of ~/duffy.key, or None
     ssid:
         description:
             - SessionID, required with action 'done', optional with 'list'.
@@ -125,6 +140,7 @@ EXAMPLES = '''
     api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
 '''
+
 try:
     from cicoclient.wrapper import CicoWrapper
     HAS_CICO = True
@@ -135,7 +151,8 @@ except ImportError:
 def main():
     argument_spec = dict(
         action=dict(required=True, choices=['get', 'done', 'list']),
-        arch=dict(default='x86_64', choices=['i386', 'x86_64', 'aarch64', 'ppc64le']),
+        arch=dict(default='x86_64', choices=['i386', 'x86_64', 'aarch64',
+                                             'ppc64le']),
         flavor=dict(default='small', choices=['tiny', 'small', 'medium',
                                               'lram.tiny', 'lram.small',
                                               'xram.tiny', 'xram.small',
@@ -208,7 +225,6 @@ def main():
     except Exception as e:
         module.fail_json(msg=e.message)
 
-from ansible.module_utils.basic import *  # noqa
 
 if __name__ == '__main__':
     main()
