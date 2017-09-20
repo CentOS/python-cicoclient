@@ -62,7 +62,7 @@ options:
     api_key:
         description:
             - API key
-        default: CICO_API_KEY environment variable or None
+        default: CICO_API_KEY environment variable, the contents of ~/.duffy.key, the contents of ~/duffy.key, or None
     ssid:
         description:
             - SessionID, required with action 'done', optional with 'list'.
@@ -125,7 +125,6 @@ EXAMPLES = '''
     api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
 '''
-import os
 try:
     from cicoclient.wrapper import CicoWrapper
     HAS_CICO = True
@@ -146,7 +145,7 @@ def main():
         retry_count=dict(default=1, type='int'),
         retry_interval=dict(default=10, type='int'),
         endpoint=dict(default='http://admin.ci.centos.org:8080/'),
-        api_key=dict(default=os.getenv('CICO_API_KEY', None), no_log=True),
+        api_key=dict(default=None, no_log=True),
         ssid=dict(default=None),
     )
     module = AnsibleModule(argument_spec)
@@ -165,10 +164,6 @@ def main():
     ssid = module.params['ssid']
     flavor = module.params['flavor']
 
-    # Pre-flight validation
-    if api_key is None:
-        module.fail_json(msg='An API key is required for this module.')
-
     if action == 'done' and ssid is None:
         module.fail_json(msg='A SSID is required when releasing nodes.')
 
@@ -177,6 +172,9 @@ def main():
             endpoint=endpoint,
             api_key=api_key
         )
+
+        if api.api_key is None:
+            module.fail_json(msg='An API key is required for this module.')
 
         if action == 'get':
             hosts, new_ssid = api.node_get(arch=arch, ver=release, count=count,

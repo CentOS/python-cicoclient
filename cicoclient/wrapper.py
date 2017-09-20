@@ -13,6 +13,7 @@
 #   under the License.
 #
 
+import os
 import time
 
 import cicoclient.client as client
@@ -27,12 +28,27 @@ class CicoWrapper(client.CicoClient):
     def __init__(self, **params):
         super(CicoWrapper, self).__init__(**params)
         self.user_agent = 'python-cicoclient-wrapper'
-        try:
-            self.api_key = params['api_key']
-        except KeyError:
-            self.api_key = None
+        self.api_key = self._lookup_api_key(params.get('api_key'))
 
         self._full_inventory = self._self_inventory = None
+
+    @staticmethod
+    def _lookup_api_key(api_key):
+        if api_key is not None:
+            return api_key
+
+        try:
+            return os.environ['CICO_API_KEY']
+        except KeyError:
+            pass
+
+        for key_file in ('~/.duffy.key', '~/duffy.key'):
+            try:
+                return open(os.path.expanduser(key_file)).read().strip()
+            except IOError:
+                pass
+
+        return None
 
     @property
     def full_inventory(self):
