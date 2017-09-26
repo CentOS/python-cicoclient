@@ -14,7 +14,6 @@
 #
 
 import sys
-import os
 
 import cicoclient
 from cliff.app import App
@@ -47,9 +46,11 @@ class CicoCli(App):
         parser.add_argument(
             '--api-key',
             metavar='<api-key>',
-            help='API key to admin.ci.centos.org service. Defaults to'
-                 ' environment variable for CICO_API_KEY.',
-            default=os.getenv('CICO_API_KEY', None)
+            help='API key to admin.ci.centos.org service. If not provided the'
+                 ' value of the CICO_API_KEY environment variable will be used'
+                 ' if defined, followed by the contents of ~/.duffy.key if'
+                 ' present, finally the contents of ~/duffy.key if present.',
+            default=None
         )
 
         return parser

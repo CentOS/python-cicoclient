@@ -14,7 +14,6 @@
 #
 
 import logging
-import sys
 
 from cliff.lister import Lister
 from cicoclient.wrapper import CicoWrapper
