@@ -206,3 +206,31 @@ class CicoWrapper(client.CicoClient):
         resp, body = self.get('Node/done?%s' % args)
 
         return requested_hosts
+
+    def node_fail(self, ssid=None):
+        """
+        Mark the nodes as "failed", to get 12hrs to debug things.
+        The API doesn't provide any kind of output, try to be helpful by
+        providing the list of servers to be released.
+
+        :param ssid: ssid of the server pool
+        :return: [ requested_hosts ]
+        """
+        if self.api_key is None:
+            raise exceptions.ApiKeyRequired
+
+        if ssid is None:
+            raise exceptions.SsidRequired
+
+        # There is no body replied in this call so at least get the hosts for
+        # the specified ssid to return them.
+        requested_hosts = dict()
+        for host in self.self_inventory:
+            if ssid == self.self_inventory[host]['comment']:
+                requested_hosts[host] = self.full_inventory[host]
+
+        args = "key={key}&ssid={ssid}".format(key=self.api_key, ssid=ssid)
+
+        resp, body = self.get('Node/fail?%s' % args)
+
+        return requested_hosts

@@ -36,6 +36,7 @@ Here's what it looks like::
           help           print detailed help for another command
           inventory      Return a node inventory from the ci.centos.org infrastructure.
           node done      Releases nodes from the ci.centos.org infrastructure for a ssid
+          node fail      Fail nodes from the ci.centos.org infrastructure for a ssid to debug
           node get       Requests nodes from the ci.centos.org infrastructure
 
 If you have installed ``python-cicoclient`` from a RPM repository, you can also
@@ -235,6 +236,66 @@ Built-in help::
 Usage::
 
         $ cico node done 8fd381ea-8a46-11e5-b2e3-525400ea212d
+        Starting new HTTP connection (1): admin.ci.centos.org
+        Resetting dropped connection: admin.ci.centos.org
+        Resetting dropped connection: admin.ci.centos.org
+        Released these servers with SSID: 8fd381ea-8a46-11e5-b2e3-525400ea212d
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        | host_id |   hostname    | ip_address   |  chassis  | used_count | current_state | comment                              | distro | rel  | centos_version | architecture | node_pool | console_port | flavor      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+        |     117 | node4.cluster | <obfuscated> | <cluster> |         69 | Deployed      | 8fd381ea                             | None   | None | 7              | x86_64       |         1 | 5678         | medium      |
+        +---------+---------------+--------------+-----------+------------+---------------+--------------------------------------+--------+------+----------------+--------------+-----------+--------------+-------------+
+
+
+Failing nodes
+~~~~~~~~~~~~~
+The ``cico node fail`` command will allow you to mark the nodes related to a
+session ID as "failed", which will add the owners' ssh keys on the nodes and
+reserve the node for 12 hours.
+This command requires an API key to be configured.
+
+Built-in help::
+
+        $ cico help node fail
+        usage: cico node fail [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                      [--max-width <integer>] [--noindent]
+                      [--quote {all,minimal,none,nonnumeric}]
+                      <ssid>
+
+        Marks nodes as failed for 12hrs of debugging time
+
+        positional arguments:
+          <ssid>                SSID of the server pool to release
+
+        optional arguments:
+          -h, --help            show this help message and exit
+
+        output formatters:
+          output formatter options
+        
+          -f {csv,json,table,value,yaml}, --format {csv,json,table,value,yaml}
+                                the output format, defaults to table
+          -c COLUMN, --column COLUMN
+                                specify the column(s) to include, can be repeated
+
+        table formatter:
+          --max-width <integer>
+                                Maximum display width, <1 to disable. You can also use
+                                the CLIFF_MAX_TERM_WIDTH environment variable, but the
+                                parameter takes precedence.
+
+        json formatter:
+          --noindent            whether to disable indenting the JSON
+
+        CSV Formatter:
+          --quote {all,minimal,none,nonnumeric}
+                                when to include quotes, defaults to nonnumeric
+
+
+
+Usage::
+
+        $ cico node fail 8fd381ea-8a46-11e5-b2e3-525400ea212d
         Starting new HTTP connection (1): admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
         Resetting dropped connection: admin.ci.centos.org
