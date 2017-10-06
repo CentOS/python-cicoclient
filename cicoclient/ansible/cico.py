@@ -44,25 +44,25 @@ options:
         description:
             - The flavor (size) of an altarch Node
         choices:
-        - tiny
-        - small
-        - medium
-        - lram.tiny
-        - lram.small
-        - lram.medium
-        - xram.tiny
-        - xram.small
-        - xram.medium
-        - xram.large
+            - tiny
+            - small
+            - medium
+            - lram.tiny
+            - lram.small
+            - lram.medium
+            - xram.tiny
+            - xram.small
+            - xram.medium
+            - xram.large
         default: small
 
     count:
         description:
-            - Amount of nodes
+            - Number of nodes
         default: 1
     retry_count:
         description:
-            - Amount of retries to do in case of failure.
+            - Number of retries to do in case of failure.
         default: 1
     retry_interval:
         description:
@@ -76,8 +76,8 @@ options:
         description:
             - API key
         default: >
-          CICO_API_KEY environment variable, the contents of ~/.duffy.key,
-          the contents of ~/duffy.key, or None
+            CICO_API_KEY environment variable, the contents of ~/.duffy.key,
+            the contents of ~/duffy.key, or None
     ssid:
         description:
             - SessionID, required with action 'done', optional with 'list'.

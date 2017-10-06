@@ -16,8 +16,9 @@
 import logging
 
 from cliff.lister import Lister
-from cicoclient.wrapper import CicoWrapper
+
 from cicoclient import utils
+from cicoclient.wrapper import CicoWrapper
 
 
 class Inventory(Lister):
@@ -87,14 +88,14 @@ class NodeGet(Lister):
             metavar='<count>',
             type=int,
             default=1,
-            help='Requested amount of servers. Defaults to 1.'
+            help='Requested number of servers. Defaults to 1.'
         )
         parser.add_argument(
             '--retry-count',
             metavar='<count>',
             type=int,
             default=1,
-            help='Amount of retries to do in case of failure. Defaults to 1.'
+            help='Number of retries to do in case of failure. Defaults to 1.'
         )
         parser.add_argument(
             '--retry-interval',

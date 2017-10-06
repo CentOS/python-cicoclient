@@ -21,15 +21,19 @@ Here's what it looks like::
         optional arguments:
           --version             show program's version number and exit
           -v, --verbose         Increase verbosity of output. Can be repeated.
-          --log-file LOG_FILE   Specify a file to log output. Disabled by default.
           -q, --quiet           Suppress output except warnings and errors.
+          --log-file LOG_FILE   Specify a file to log output. Disabled by default.
           -h, --help            Show help message and exit.
           --debug               Show tracebacks on errors.
           --endpoint <endpoint>
                                 Endpoint to the admin.ci.centos.org service. Defaults
                                 to: http://admin.ci.centos.org:8080/
-          --api-key <api-key>   API key to admin.ci.centos.org service. Defaults to
-                                environment variable for CICO_API_KEY.
+          --api-key <api-key>   API key to admin.ci.centos.org service. If not
+                                provided the value of the CICO_API_KEY environment
+                                variable will be used if defined, followed by the
+                                contents of ~/.duffy.key if present, finally the
+                                contents of ~/duffy.key if present.
+
 
         Commands:
           complete       print bash completion command
@@ -49,7 +53,7 @@ default with the ``--endpoint`` argument.
 
 Setting your API key
 ~~~~~~~~~~~~~~~~~~~~
-There are two ways of setting your API key when using ``cico``. You can either
+There are four ways of setting your API key when using ``cico``. You can either
 provide it on the command line like so::
 
     cico <command> --api-key <key>
@@ -57,6 +61,14 @@ provide it on the command line like so::
 Or by using the ``CICO_API_KEY`` environmental variable::
 
     export CICO_API_KEY=<key>; cico <command>
+
+Or by providing ~/.duffy.key file containing the api key::
+
+    echo <key> > ~/.duffy.key; cico <command>
+
+Or by providing ~/duffy.key file containing the api key::
+
+    echo <key> > ~/duffy.key; cico <command>
 
 Some commands, such as ``cico inventory`` do not require a key to be set.
 For more information, please refer to the `Duffy documentation`_.
@@ -149,9 +161,9 @@ Built-in help::
           -h, --help            show this help message and exit
           --arch <arch>         Requested server architecture. Defaults to x86_64.
           --release <release>   Requested CentOS release. Defaults to 7.
-          --count <count>       Requested amount of servers. Defaults to 1.
+          --count <count>       Requested number of servers. Defaults to 1.
           --retry-count <count>
-                                Amount of retries to do in case of failure. Defaults
+                                Number of retries to do in case of failure. Defaults
                                 to 1.
           --retry-interval <seconds>
                                 Wait between subsequent retries. Defaults to 10

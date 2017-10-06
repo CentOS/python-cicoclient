@@ -13,8 +13,9 @@
 #   under the License.
 #
 
-import os
 import time
+
+import os
 
 import cicoclient.client as client
 import cicoclient.exceptions as exceptions
@@ -134,11 +135,11 @@ class CicoWrapper(client.CicoClient):
     def node_get(self, arch=None, ver=None, flavor=None, count=1,
                  retry_count=1, retry_interval=10):
         """
-        Requests specified amount of nodes with the provided parameters.
+        Requests specified number of nodes with the provided parameters.
 
         :param arch: Server architecture (ex: x86_64)
         :param ver: CentOS version (ex: 7)
-        :param count: Amount of servers (ex: 2)
+        :param count: Number of servers (ex: 2)
         :parma flavor: The flavor of machine to use (multi-arch only)
         :param retry_count: Number of times to retry in case of failure (ex: 5)
         :param retry_interval: Wait in seconds between each retry (ex: 30)
