@@ -28,26 +28,26 @@ use ``ansible-doc`` to access it::
             Action to take (Choices: get, done, list)
 
     - api_key
-            API key [Default: CICO_API_KEY environment variable or None]
+            API key [Default: CICO_API_KEY environment variable, the contents of ~/.duffy.key, the contents of ~/duffy.key, or None ]
 
     - arch
             Server architecture (Choices: i386, x86_64, aarch64, ppc64le) [Default: x86_64]
 
     - count
-            Amount of nodes [Default: 1]
+            Number of nodes [Default: 1]
 
     - endpoint
             API endpoint [Default: http://admin.ci.centos.org:8080/]
-
-    - release
-            CentOS release (Choices: 5, 6, 7) [Default: 7]
 
     - flavor
         The flavor (size) of an altarch Node (ignored on baremetal x86_64)
         (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large)[Default: small]
 
+    - release
+            CentOS release (Choices: 5, 6, 7) [Default: 7]
+
     - retry_count
-            Amount of retries to do in case of failure. [Default: 1]
+            Number of retries to do in case of failure. [Default: 1]
 
     - retry_interval
             Wait (in seconds) between subsequent retries. [Default: 10]
@@ -111,6 +111,11 @@ use ``ansible-doc`` to access it::
         ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
 
     MAINTAINERS: David Moreau Simard <dms@redhat.com>
+
+    METADATA:
+        Status: ['preview']
+        Supported_by: community
+
 
 Retrieving node inventory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,3 +194,4 @@ Example::
         action: done
         api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
         ssid: 3e03553f-ae28-4a68-b879-f0fdbf949d5d
+
