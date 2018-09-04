@@ -91,25 +91,25 @@ EXAMPLES = '''
 # Retrieve full inventory
 - cico:
     action: list
-    register: data
+  register: data
 
 # Retrieve inventory tied to API key
 - cico:
     action: list
     api_key:  723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
-    register: data
+  register: data
 
 # Retrieve inventory tied to a SSID
 - cico:
     action: list
     ssid:  3e03553f-ae28-4a68-b879-f0fdbf949d5d
-    register: data
+  register: data
 
 # Request one CentOS 7 x86_64 node
 - cico:
     action: get
     api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
-    register: data
+  register: data
 
 # Request one CentOS 7 x86_64 node with increased tolerance failure
 - cico:
@@ -117,7 +117,7 @@ EXAMPLES = '''
     api_key: 723ef3ce-4ea4-4e8d-9c8a-20a8249b2955
     retry_count: 3
     retry_interval: 60
-    register: data
+  register: data
 
 # Request two CentOS 6 i386 nodes
 - cico:
@@ -126,7 +126,7 @@ EXAMPLES = '''
     arch: i386
     release: 6
     count: 2
-    register: data
+  register: data
 
 # Release nodes requested in a registered 'get' action
 - cico:
