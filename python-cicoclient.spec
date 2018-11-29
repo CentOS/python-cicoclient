@@ -5,7 +5,7 @@ Summary:          Client interfaces to admin.ci.centos.org
 
 License:          ASL 2.0
 URL:              https://github.com/CentOS/%{name}
-Source0:          https://pypi.io/packages/source/P/%{name}/%{name}-%{version}.tar.gz
+Source0:          https://pypi.io/packages/source/p/%{name}/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
@@ -84,7 +84,7 @@ rm -rf html/.doctrees html/.buildinfo
 * Thu Nov 29 2018 brian@bstinson.com - 0.4.4-1
 - Fixup the default flavor for ansible
 
-* Apr 05 2018 brian@bstinson.com 0.4.2-1
+* Thu Apr 05 2018 brian@bstinson.com 0.4.2-1
 - Build for multiarch support
 
 * Tue Aug 23 2016 brian@bstinson.com 0.3.9-1
