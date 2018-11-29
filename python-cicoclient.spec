@@ -1,5 +1,5 @@
 Name:             python-cicoclient
-Version:          0.4.3
+Version:          0.4.4
 Release:          1%{?dist}
 Summary:          Client interfaces to admin.ci.centos.org
 
@@ -81,7 +81,7 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
-* Thu Nov 29 2018 brian@bstinson.com - 0.4.3-1
+* Thu Nov 29 2018 brian@bstinson.com - 0.4.4-1
 - Fixup the default flavor for ansible
 
 * Apr 05 2018 brian@bstinson.com 0.4.2-1
