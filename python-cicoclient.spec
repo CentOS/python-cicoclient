@@ -1,5 +1,5 @@
 Name:             python-cicoclient
-Version:          0.3.10
+Version:          0.4.2
 Release:          1%{?dist}
 Summary:          Client interfaces to admin.ci.centos.org
 
@@ -81,6 +81,9 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Apr 05 2018 brian@bstinson.com 0.4.2-1
+- Build for multiarch support
+
 * Tue Aug 23 2016 brian@bstinson.com 0.3.9-1
 - Build in the CentOS infrastructure tags
 
