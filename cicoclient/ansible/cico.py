@@ -153,7 +153,7 @@ def main():
         action=dict(required=True, choices=['get', 'done', 'list']),
         arch=dict(default='x86_64', choices=['i386', 'x86_64', 'aarch64',
                                              'ppc64le']),
-        flavor=dict(default='small', choices=['tiny', 'small', 'medium',
+        flavor=dict(default=None, choices=['tiny', 'small', 'medium',
                                               'lram.tiny', 'lram.small',
                                               'xram.tiny', 'xram.small',
                                               'xram.medium', 'xram.large']),
