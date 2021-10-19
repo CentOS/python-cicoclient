@@ -44,7 +44,7 @@ use ``ansible-doc`` to access it::
         (Choices: tiny, small, medium, lram.tiny, lram.small, lram.medium, xram.tiny, xram.small, xram.medium, xram.large)[Default: small]
 
     - release
-            CentOS release (Choices: 5, 6, 7, 8, 8-stream) [Default: 7]
+            CentOS release (Choices: 5, 6, 7, 8, 8-stream, 9-stream) [Default: 7]
 
     - retry_count
             Number of retries to do in case of failure. [Default: 1]
