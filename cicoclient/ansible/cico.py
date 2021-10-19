@@ -38,7 +38,7 @@ options:
     release:
         description:
             - CentOS release
-        choices: [5, 6, 7, 8, 8-stream]
+        choices: [5, 6, 7, 8, 8-stream, 9-stream]
         default: 7
     flavor:
         description:
@@ -157,7 +157,7 @@ def main():
                                               'lram.tiny', 'lram.small',
                                               'xram.tiny', 'xram.small',
                                               'xram.medium', 'xram.large']),
-        release=dict(default='7', choices=['5', '6', '7', '8', '8-stream']),
+        release=dict(default='7', choices=['5', '6', '7', '8', '8-stream', '9-stream']),
         count=dict(default=1, type='int'),
         retry_count=dict(default=1, type='int'),
         retry_interval=dict(default=10, type='int'),
