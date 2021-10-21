@@ -1,7 +1,9 @@
 sphinx
 sphinx-rtd-theme
-unittest2
-mock
-discover
 flake8
-ansible
+pytest
+pytest-flake8
+pytest-cov
+pytest-pylint
+pytest-mock
+requests_mock
