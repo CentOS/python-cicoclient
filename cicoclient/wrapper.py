@@ -167,6 +167,9 @@ class CicoWrapper(client.CicoClient):
 
         if not body:
             raise exceptions.NoInventory
+            
+        if not isinstance(body, dict):
+            raise ValueError(str(body))
 
         # Get the hosts that were requested.
         # Note: We have to iterate over full inventory instead of just the
