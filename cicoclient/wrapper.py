@@ -97,7 +97,7 @@ class CicoWrapper(client.CicoClient):
         real_self_inventory = dict()
 
         for host in self_inventory:
-            real_self_inventory[host[0]] = self.full_inventory[host[0]]
+            real_self_inventory[host[1]] = self.full_inventory[host[1]]
 
         self._self_inventory = real_self_inventory
 
