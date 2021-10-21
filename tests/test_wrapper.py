@@ -54,3 +54,15 @@ def test_inventory_with_ssid(cicowrapper, inventory_mock):
 def test_inventory_with_nonexisting_ssid(cicowrapper, inventory_mock):
     inventory = cicowrapper.inventory(ssid='deaddead')
     assert inventory == {}
+
+def test_node_get(cicowrapper, requests_mock, inventory_mock):
+    requests_mock.get('http://api.example.com/Node/get?key=dummy_key&arch=x86_64', json={'hosts':['n1.hufty'], 'ssid': 'deadtest'})
+    inventory, ssid = cicowrapper.node_get(arch='x86_64')
+    assert ssid == 'deadtest'
+    assert inventory
+    assert 'n1.hufty' in inventory
+    assert inventory['n1.hufty']['ip_address'] == "172.19.3.1"
+
+def test_node_done(cicowrapper, requests_mock, inventory_mock):
+    requests_mock.get('http://api.example.com/Node/done?key=dummy_key&ssid=deadtest')
+    cicowrapper.node_done(ssid='deadtest')
