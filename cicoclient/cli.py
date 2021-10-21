@@ -79,7 +79,7 @@ class NodeGet(Lister):
         parser.add_argument(
             '--release',
             metavar='<release>',
-            choices=['5', '6', '7', '8', '8-stream','9-stream'],
+            choices=['5', '6', '7', '8', '8-stream', '9-stream'],
             default='7',
             help='Requested CentOS release. Defaults to 7.'
         )

@@ -1,0 +1,26 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python:
+          - "2.7"
+          - "3.6"
+          - "3.8"
+    env:
+      PYTHON: ${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: pip install tox tox-gh-actions
+      - name: Run tests
+        run: tox
