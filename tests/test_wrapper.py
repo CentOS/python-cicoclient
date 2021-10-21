@@ -25,33 +25,32 @@ _FAKE_INVENTORY = [
 def cicowrapper():
     return wrapper.CicoWrapper(endpoint='http://api.example.com/', api_key='dummy_key')
 
-def test_full_inventory(cicowrapper, requests_mock):
-    requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+@pytest.fixture
+def inventory_mock(requests_mock):
+    return requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+
+def test_full_inventory(cicowrapper, inventory_mock):
     assert cicowrapper.full_inventory
     assert 'n1.hufty' in cicowrapper.full_inventory
     assert cicowrapper.full_inventory['n1.hufty']['ip_address'] == "172.19.3.1"
 
-def test_self_inventory(cicowrapper, requests_mock):
-    requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+def test_self_inventory(cicowrapper, inventory_mock):
     assert cicowrapper.self_inventory
     assert 'n1.hufty' in cicowrapper.self_inventory
     assert cicowrapper.self_inventory['n1.hufty']['ip_address'] == "172.19.3.1"
 
-def test_inventory(cicowrapper, requests_mock):
-    requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+def test_inventory(cicowrapper, inventory_mock):
     inventory = cicowrapper.inventory()
     assert inventory
     assert 'n1.hufty' in inventory
     assert inventory['n1.hufty']['ip_address'] == "172.19.3.1"
 
-def test_inventory_with_ssid(cicowrapper, requests_mock):
-    requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+def test_inventory_with_ssid(cicowrapper, inventory_mock):
     inventory = cicowrapper.inventory(ssid='83fba182')
     assert inventory
     assert 'n1.hufty' in inventory
     assert inventory['n1.hufty']['ip_address'] == "172.19.3.1"
 
-def test_inventory_with_nonexisting_ssid(cicowrapper, requests_mock):
-    requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+def test_inventory_with_nonexisting_ssid(cicowrapper, inventory_mock):
     inventory = cicowrapper.inventory(ssid='deaddead')
     assert inventory == {}
