@@ -167,7 +167,7 @@ class CicoWrapper(client.CicoClient):
 
         if not body:
             raise exceptions.NoInventory
-            
+
         if not isinstance(body, dict):
             raise ValueError(str(body))
 
