@@ -32,3 +32,11 @@ def cicowrapper():
 @pytest.fixture
 def inventory_mock(requests_mock):
     return requests_mock.get('http://api.example.com/Inventory', json=_FAKE_INVENTORY)
+
+@pytest.fixture
+def app_mock(mocker):
+    app = mocker.Mock()
+    app.options = mocker.Mock()
+    app.options.endpoint = 'http://api.example.com/'
+    app.options.api_key = 'dummy_key'
+    return app
