@@ -1,11 +1,3 @@
-from cicoclient import client
-
-import pytest
-
-@pytest.fixture
-def cico():
-    return client.CicoClient(endpoint='http://api.example.com')
-
 def test_get(requests_mock, cico):
     expected_headers = {
         'Accept': 'application/json',
