@@ -1,5 +1,5 @@
 Name:             python-cicoclient
-Version:          0.4.4
+Version:          0.4.7
 Release:          1%{?dist}
 Summary:          Client interfaces to admin.ci.centos.org
 
@@ -81,6 +81,15 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Fri Oct 22 2021 Evgeni Golov - 0.4.7-1
+- Update to 0.4.7
+
+* Tue Oct 19 2021 arrfab@centos.org - 0.4.6-1
+- Bumped to 0.4.6 for 9-stream support
+
+* Tue Oct 29 2019 brian@bstinson.com - 0.4.5-1
+- Add CentOS 8 and 8-Stream
+
 * Thu Nov 29 2018 brian@bstinson.com - 0.4.4-1
 - Fixup the default flavor for ansible
 
