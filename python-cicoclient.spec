@@ -1,3 +1,11 @@
+%if 0%{?rhel} && 0%{?rhel} < 8
+%bcond_without python2
+%bcond_with python3
+%else
+%bcond_with python2
+%bcond_without python3
+%endif
+
 Name:             python-cicoclient
 Version:          0.4.7
 Release:          1%{?dist}
@@ -10,17 +18,36 @@ Source0:          https://pypi.io/packages/source/p/%{name}/%{name}-%{version}.t
 BuildArch:        noarch
 
 BuildRequires:    git
+
+%if %{with python2}
 BuildRequires:    python2-devel
 BuildRequires:    python-cliff
 BuildRequires:    python-pbr
 BuildRequires:    python-requests
 BuildRequires:    python-setuptools
 BuildRequires:    python-six
+%endif
+%if %{with python3}
+BuildRequires:    python3-devel
+#BuildRequires:    python3-cliff
+BuildRequires:    python3-pbr
+BuildRequires:    python3-requests
+BuildRequires:    python3-setuptools
+BuildRequires:    python3-six
+%endif
 
+%if %{with python2}
 Requires:         python-cliff >= 1.14.0
 Requires:         python-pbr >= 1.6
 Requires:         python-requests >= 2.5.2
 Requires:         python-six >= 1.9.0
+%endif
+%if %{with python3}
+Requires:         python3-cliff >= 1.14.0
+Requires:         python3-pbr >= 1.6
+Requires:         python3-requests >= 2.5.2
+Requires:         python3-six >= 1.9.0
+%endif
 
 %description
 python-cicoclient is a client, library, and a CLI interface that can be used to
@@ -29,8 +56,14 @@ communicate with the ci.centos.org infrastructure provisioning system: Duffy.
 %package doc
 Summary:          Documentation for python-cicoclient
 
+%if %{with python2}
 BuildRequires:    python-sphinx
 BuildRequires:    python-sphinx_rtd_theme
+%endif
+%if %{with python3}
+BuildRequires:    python3-sphinx
+BuildRequires:    python3-sphinx_rtd_theme
+%endif
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -47,10 +80,20 @@ This package contains auto-generated documentation.
 rm -f requirements.txt test-requirements.txt
 
 %build
+%if %{with python2}
 %{__python2} setup.py build
+%endif
+%if %{with python3}
+%py3_build
+%endif
 
 %install
+%if %{with python2}
 %{__python2} setup.py install --skip-build --root %{buildroot}
+%endif
+%if %{with python3}
+%py3_install
+%endif
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html docs html
@@ -65,8 +108,14 @@ rm -rf html/.doctrees html/.buildinfo
 %license LICENSE
 %doc README.rst
 %{_bindir}/cico
+%if %{with python2}
 %{python2_sitelib}/cicoclient
 %{python2_sitelib}/*.egg-info
+%endif
+%if %{with python3}
+%{python3_sitelib}/cicoclient
+%{python3_sitelib}/*.egg-info
+%endif
 %{_mandir}/man1/cico.1*
 
 %files doc
