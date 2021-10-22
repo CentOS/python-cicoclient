@@ -15,7 +15,6 @@ BuildRequires:    python-cliff
 BuildRequires:    python-pbr
 BuildRequires:    python-requests
 BuildRequires:    python-setuptools
-BuildRequires:    python-simplejson
 BuildRequires:    python-six
 
 # Work around an old version of python-sphinx_rtd_theme in CBS
@@ -24,7 +23,6 @@ BuildRequires:    fontawesome-fonts-web
 Requires:         python-cliff >= 1.14.0
 Requires:         python-pbr >= 1.6
 Requires:         python-requests >= 2.5.2
-Requires:         python-simplejson
 Requires:         python-six >= 1.9.0
 
 %description
