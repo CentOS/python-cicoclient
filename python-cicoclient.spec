@@ -17,9 +17,6 @@ BuildRequires:    python-requests
 BuildRequires:    python-setuptools
 BuildRequires:    python-six
 
-# Work around an old version of python-sphinx_rtd_theme in CBS
-BuildRequires:    fontawesome-fonts-web
-
 Requires:         python-cliff >= 1.14.0
 Requires:         python-pbr >= 1.6
 Requires:         python-requests >= 2.5.2
@@ -34,8 +31,6 @@ Summary:          Documentation for python-cicoclient
 
 BuildRequires:    python-sphinx
 BuildRequires:    python-sphinx_rtd_theme
-# python-sphinx_rtd_theme missing dependency https://bugzilla.redhat.com/show_bug.cgi?id=1282297
-BuildRequires:    fontawesome-fonts-web
 
 Requires:         %{name} = %{version}-%{release}
 
