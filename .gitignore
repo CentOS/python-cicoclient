@@ -11,3 +11,6 @@ build
 eggs
 .tox/
 venv
+.coverage
+coverage.xml
+htmlcov/
