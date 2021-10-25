@@ -1,5 +1,13 @@
+%if 0%{?rhel} && 0%{?rhel} < 8
+%bcond_without python2
+%bcond_with python3
+%else
+%bcond_with python2
+%bcond_without python3
+%endif
+
 Name:             python-cicoclient
-Version:          0.4.4
+Version:          0.4.7
 Release:          1%{?dist}
 Summary:          Client interfaces to admin.ci.centos.org
 
@@ -10,22 +18,36 @@ Source0:          https://pypi.io/packages/source/p/%{name}/%{name}-%{version}.t
 BuildArch:        noarch
 
 BuildRequires:    git
+
+%if %{with python2}
 BuildRequires:    python2-devel
 BuildRequires:    python-cliff
 BuildRequires:    python-pbr
 BuildRequires:    python-requests
 BuildRequires:    python-setuptools
-BuildRequires:    python-simplejson
 BuildRequires:    python-six
+%endif
+%if %{with python3}
+BuildRequires:    python3-devel
+#BuildRequires:    python3-cliff
+BuildRequires:    python3-pbr
+BuildRequires:    python3-requests
+BuildRequires:    python3-setuptools
+BuildRequires:    python3-six
+%endif
 
-# Work around an old version of python-sphinx_rtd_theme in CBS
-BuildRequires:    fontawesome-fonts-web
-
+%if %{with python2}
 Requires:         python-cliff >= 1.14.0
 Requires:         python-pbr >= 1.6
 Requires:         python-requests >= 2.5.2
-Requires:         python-simplejson
 Requires:         python-six >= 1.9.0
+%endif
+%if %{with python3}
+Requires:         python3-cliff >= 1.14.0
+Requires:         python3-pbr >= 1.6
+Requires:         python3-requests >= 2.5.2
+Requires:         python3-six >= 1.9.0
+%endif
 
 %description
 python-cicoclient is a client, library, and a CLI interface that can be used to
@@ -34,10 +56,14 @@ communicate with the ci.centos.org infrastructure provisioning system: Duffy.
 %package doc
 Summary:          Documentation for python-cicoclient
 
+%if %{with python2}
 BuildRequires:    python-sphinx
 BuildRequires:    python-sphinx_rtd_theme
-# python-sphinx_rtd_theme missing dependency https://bugzilla.redhat.com/show_bug.cgi?id=1282297
-BuildRequires:    fontawesome-fonts-web
+%endif
+%if %{with python3}
+BuildRequires:    python3-sphinx
+BuildRequires:    python3-sphinx_rtd_theme
+%endif
 
 Requires:         %{name} = %{version}-%{release}
 
@@ -54,10 +80,20 @@ This package contains auto-generated documentation.
 rm -f requirements.txt test-requirements.txt
 
 %build
+%if %{with python2}
 %{__python2} setup.py build
+%endif
+%if %{with python3}
+%py3_build
+%endif
 
 %install
+%if %{with python2}
 %{__python2} setup.py install --skip-build --root %{buildroot}
+%endif
+%if %{with python3}
+%py3_install
+%endif
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build -b html docs html
@@ -72,8 +108,14 @@ rm -rf html/.doctrees html/.buildinfo
 %license LICENSE
 %doc README.rst
 %{_bindir}/cico
+%if %{with python2}
 %{python2_sitelib}/cicoclient
 %{python2_sitelib}/*.egg-info
+%endif
+%if %{with python3}
+%{python3_sitelib}/cicoclient
+%{python3_sitelib}/*.egg-info
+%endif
 %{_mandir}/man1/cico.1*
 
 %files doc
@@ -81,6 +123,15 @@ rm -rf html/.doctrees html/.buildinfo
 %doc html
 
 %changelog
+* Fri Oct 22 2021 Evgeni Golov - 0.4.7-1
+- Update to 0.4.7
+
+* Tue Oct 19 2021 arrfab@centos.org - 0.4.6-1
+- Bumped to 0.4.6 for 9-stream support
+
+* Tue Oct 29 2019 brian@bstinson.com - 0.4.5-1
+- Add CentOS 8 and 8-Stream
+
 * Thu Nov 29 2018 brian@bstinson.com - 0.4.4-1
 - Fixup the default flavor for ansible
 
