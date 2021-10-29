@@ -204,24 +204,23 @@ def main():
                 'hosts': hosts,
                 'ssid': new_ssid
             }
-            module.exit_json(changed=True, results=data)
 
-        if action == 'done':
+        elif action == 'done':
             hosts = api.node_done(ssid=ssid)
             data = {
                 'message': 'Released servers successfully',
                 'hosts': hosts
             }
-            module.exit_json(changed=True, results=data)
 
-        if action == 'list':
+        elif action == 'list':
             hosts = api.inventory(ssid=ssid)
 
             data = {
                 'message': 'Listed servers successfully',
                 'hosts': hosts
             }
-            module.exit_json(changed=True, results=data)
+
+        module.exit_json(changed=True, cico_results=data)
 
     except Exception as e:
         module.fail_json(msg=e.message)
