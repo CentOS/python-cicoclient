@@ -170,3 +170,36 @@ class NodeDone(Lister):
         return (columns,
                 (utils.get_dict_properties(hosts[host], columns)
                  for host in hosts))
+
+
+class NodeFail(Lister):
+    """Marks nodes as failed for 12hrs of debugging time"""
+
+    log = logging.getLogger(__name__)
+
+    def get_parser(self, prog_name):
+        parser = super(NodeFail, self).get_parser(prog_name)
+        parser.add_argument(
+            'ssid',
+            metavar='<ssid>',
+            help='SSID of the server pool to release'
+        )
+        return parser
+
+    @utils.log_method(log)
+    def take_action(self, parsed_args):
+        api = CicoWrapper(
+            endpoint=self.app.options.endpoint,
+            api_key=self.app.options.api_key
+        )
+
+        hosts = api.node_fail(ssid=parsed_args.ssid)
+
+        columns = ('host_id', 'hostname', 'ip_address', 'chassis',
+                   'used_count', 'current_state', 'comment', 'distro',
+                   'rel', 'centos_version', 'architecture', 'node_pool',
+                   'console_port', 'flavor')
+
+        return (columns,
+                (utils.get_dict_properties(hosts[host], columns)
+                 for host in hosts))
