@@ -109,7 +109,7 @@ class CicoWrapper(client.CicoClient):
         """
         matching_hosts = {}
         for host in inventory:
-            if inventory[host]['comment'] == ssid:
+            if str(inventory[host]['comment']) == ssid:
                 matching_hosts[host] = inventory[host]
 
         return matching_hosts
@@ -202,7 +202,7 @@ class CicoWrapper(client.CicoClient):
         # the specified ssid to return them.
         requested_hosts = dict()
         for host in self.self_inventory:
-            if ssid == self.self_inventory[host]['comment']:
+            if ssid == str(self.self_inventory[host]['comment']):
                 requested_hosts[host] = self.full_inventory[host]
 
         args = "key={key}&ssid={ssid}".format(key=self.api_key, ssid=ssid)
