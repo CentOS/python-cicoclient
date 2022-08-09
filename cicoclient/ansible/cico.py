@@ -223,7 +223,7 @@ def main():
         module.exit_json(changed=True, cico_results=data)
 
     except Exception as e:
-        module.fail_json(msg=e.message)
+        module.fail_json(msg=str(e))
 
 
 if __name__ == '__main__':
